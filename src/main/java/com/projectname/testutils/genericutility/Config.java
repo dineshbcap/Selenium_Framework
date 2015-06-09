@@ -13,6 +13,8 @@ public class Config {
 	
 	public static int retryCount=0;
 	
+	//TestLink Update
+	public static Boolean testLinkUpdate = false;
 	//Browser
 	public static String browser="CHROME";
 

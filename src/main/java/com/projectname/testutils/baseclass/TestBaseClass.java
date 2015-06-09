@@ -199,7 +199,7 @@ public class TestBaseClass {
 		driver = getWebDriver(Config.browser);
 		wait = new WebDriverWait(driver, 30);
 		driver.get(Config.URL);
-
+		
 		// Maximize the window
 		driver.manage().window().maximize();
 
@@ -269,32 +269,35 @@ public class TestBaseClass {
 		MapToTestLink mapToTestLink = result.getMethod()
 				.getConstructorOrMethod().getMethod()
 				.getAnnotation(MapToTestLink.class);
-		if (mapToTestLink != null) {
-			String testCase = mapToTestLink.testCaseID();
-			if (result.isSuccess()) {
-				testLinkResult = TestLinkAPIResults.TEST_PASSED;
-				notes = "Executed successfully";
-				api = new TestLinkAPIClient(
-						environmentPropertiesReader.getTestLinkDevKey(),
-						environmentPropertiesReader.getTestlinkURL());
-				api.reportTestCaseResult(
-						environmentPropertiesReader.getTestProject(),
-						environmentPropertiesReader.getTestPlan(),
-						environmentPropertiesReader.getTestSuiteID(), testCase,
-						notes, testLinkResult,
-						environmentPropertiesReader.getTestBuildId());
-			} else {
-				testLinkResult = TestLinkAPIResults.TEST_FAILED;
-				notes = "Execution Failed";
-				api = new TestLinkAPIClient(
-						environmentPropertiesReader.getTestLinkDevKey(),
-						environmentPropertiesReader.getTestlinkURL());
-				api.reportTestCaseResult(
-						environmentPropertiesReader.getTestProject(),
-						environmentPropertiesReader.getTestPlan(),
-						environmentPropertiesReader.getTestSuiteID(), testCase,
-						notes, testLinkResult,
-						environmentPropertiesReader.getTestBuildId());
+		
+		if(Config.testLinkUpdate) {
+			if (mapToTestLink != null) {
+				String testCase = mapToTestLink.testCaseID();
+				if (result.isSuccess()) {
+					testLinkResult = TestLinkAPIResults.TEST_PASSED;
+					notes = "Executed successfully";
+					api = new TestLinkAPIClient(
+							environmentPropertiesReader.getTestLinkDevKey(),
+							environmentPropertiesReader.getTestlinkURL());
+					api.reportTestCaseResult(
+							environmentPropertiesReader.getTestProject(),
+							environmentPropertiesReader.getTestPlan(),
+							environmentPropertiesReader.getTestSuiteID(), testCase,
+							notes, testLinkResult,
+							environmentPropertiesReader.getTestBuildId());
+				} else {
+					testLinkResult = TestLinkAPIResults.TEST_FAILED;
+					notes = "Execution Failed";
+					api = new TestLinkAPIClient(
+							environmentPropertiesReader.getTestLinkDevKey(),
+							environmentPropertiesReader.getTestlinkURL());
+					api.reportTestCaseResult(
+							environmentPropertiesReader.getTestProject(),
+							environmentPropertiesReader.getTestPlan(),
+							environmentPropertiesReader.getTestSuiteID(), testCase,
+							notes, testLinkResult,
+							environmentPropertiesReader.getTestBuildId());
+				}
 			}
 		}
 		// Capture screen shot in case test has failed.
