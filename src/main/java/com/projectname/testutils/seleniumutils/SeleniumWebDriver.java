@@ -150,11 +150,11 @@ public class SeleniumWebDriver {
 		} catch (Exception e) {
 			status = "Fail";
 			result = false;
-			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
+			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString().substring(ajaxElementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
 		if(Config.requireToWrite){
-			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
+			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString().substring(ajaxElementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return result;
 
@@ -227,11 +227,11 @@ public class SeleniumWebDriver {
 		} catch (Exception e) {
 			status = "Fail";
 			result = false;
-			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
+			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString().substring(ajaxElementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
 		if(Config.requireToWrite){
-			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
+			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString().substring(ajaxElementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return result;
 	}
@@ -267,11 +267,11 @@ public class SeleniumWebDriver {
 		catch (Exception e) {
 			status = "fail";
 			result = false;
-			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), ajaxCheckboxName.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
+			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), ajaxCheckboxName.toString().substring(ajaxCheckboxName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
 		if(Config.requireToWrite){
-			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), ajaxCheckboxName.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
+			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), ajaxCheckboxName.toString().substring(ajaxCheckboxName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return result;
 	}
@@ -334,11 +334,11 @@ public class SeleniumWebDriver {
 			status = "Pass";
 		}catch (Exception e) {
 			status = "Fail";
-			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), element.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
+			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), element.toString().substring(element.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
 		if(Config.requireToWrite){
-			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), element.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
+			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), element.toString().substring(element.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 	}
 
@@ -363,11 +363,11 @@ public class SeleniumWebDriver {
 		} catch (Exception e) {
 			status = "Fail";
 			result = false;
-			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), listName.toString(), valueForSelection, status, EMPTY, getCallingMethodAndLineNumber()) );
+			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), listName.toString().substring(listName.toString().indexOf(":")+2), valueForSelection, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
 		if(Config.requireToWrite){
-			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), listName.toString(), valueForSelection, status, EMPTY, getCallingMethodAndLineNumber()));
+			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), listName.toString().substring(listName.toString().indexOf(":")+2), valueForSelection, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return result;
 	}
@@ -387,11 +387,11 @@ public class SeleniumWebDriver {
 			}
 		}  catch (Exception e) {
 			status = "Fail";
-			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), elementName.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
+			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), elementName.toString().substring(elementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
 		if(Config.requireToWrite){
-			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), elementName.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
+			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), elementName.toString().substring(elementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return returnString;
 	}
@@ -410,10 +410,10 @@ public class SeleniumWebDriver {
 			} 
 		} catch (Exception e) {
 			status = "Fail";
-			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), elementName.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
+			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), elementName.toString().substring(elementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		if(Config.requireToWrite){
-			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), elementName.toString(), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
+			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), elementName.toString().substring(elementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return returnString;
 	}
