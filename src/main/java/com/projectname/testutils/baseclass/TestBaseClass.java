@@ -226,8 +226,8 @@ public class TestBaseClass {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			FirefoxProfile fireFoxProfile;
 			if(seleniumHost.contains("localhost")){
-				File profilePath = new File("C:\\FireFoxProfiles"); 
-	            fireFoxProfile = new FirefoxProfile(profilePath); 
+				//File profilePath = new File("C:\\FireFoxProfiles"); 
+	            fireFoxProfile = new FirefoxProfile(); 
 	           	driver=new FirefoxDriver(fireFoxProfile);
 			}else{
 			// if a matching driver cannot be located
