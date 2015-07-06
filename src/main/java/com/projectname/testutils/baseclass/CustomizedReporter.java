@@ -7,7 +7,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -33,11 +35,20 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	private static final String FAILED = "_Failed";
 	private static final String SKIPPED = "_Skipped";
 	private static Boolean flag = true;
-
+	private String OS = null;
+	private String arch = null;
+	private String browser = null;
+	private String testStartedOn=null;
+	private String testEndedOn=null;
 	/**
 	 * This function will execute before suite start
 	 */
 	public void onStart(ISuite suite) {
+		// for get the current system time
+		Calendar cal = Calendar.getInstance();				
+		SimpleDateFormat DateFormat1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		testStartedOn = DateFormat1.format(cal.getTime());
+		
 		// for get the current directory
 		String workingdirectory = System.getProperty("user.dir");
 		// used to delete directory
@@ -65,8 +76,10 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	 * This function will execute after all suite done
 	 */
 	public void onFinish(ISuite suite) {
-		// TODO Auto-generated method stub
-
+		// for get the current system time
+				Calendar cal = Calendar.getInstance();				
+				SimpleDateFormat DateFormat1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				testEndedOn = DateFormat1.format(cal.getTime());
 	}
 
 	/**
@@ -373,6 +386,35 @@ public class CustomizedReporter implements ITestListener, IReporter,
 
 	public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites,
 			String outputDirectory) {
+		
+		// get OS information, browser information, Execution Info 
+        OS = System.getProperty("os.name");
+        browser= Config.browser;
+        arch=System.getProperty("os.arch");
+        
+		// Overview report block
+		int totalPassedMethods = 0;
+		int totalFailedMethods = 0;
+		int totalSkippedMethods = 0;
+		int totalMethods = 0;
+
+		// Iterating over each suite included in the test
+		for (ISuite suite : suites) {
+			// Following code gets the suite name
+			// Getting the results for the said suite
+			Map<String, ISuiteResult> suiteResults = suite.getResults();
+			for (ISuiteResult sr : suiteResults.values()) {
+				ITestContext tc = sr.getTestContext();
+				totalMethods = totalMethods + tc.getAllTestMethods().length;
+				totalPassedMethods = totalPassedMethods
+						+ tc.getPassedTests().getAllResults().size();
+				totalSkippedMethods = totalSkippedMethods
+						+ tc.getSkippedTests().getAllResults().size();
+				totalFailedMethods = totalMethods
+						- (totalPassedMethods + totalSkippedMethods);
+			}
+		}
+		
 		// for get the current directory
 		String workingdirectory = System.getProperty("user.dir");
 		// create the html file with current running class and test name
@@ -383,6 +425,43 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//Creating #3D pie chart using google javaScript api's
+		fout.println("<html>");
+		fout.println("<head>");
+		fout.println("<style>");
+		fout.println("#piechart_3d {");
+		fout.println(" position: absolute;");
+		fout.println(" top: 0px;");
+		fout.println(" right: 0Px;");
+		fout.println("width: 0px;");
+		fout.println("height: 0px;");
+		fout.println("}");
+		fout.println("</style>");
+		fout.println("<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script><script type=\"text/javascript\">");
+		fout.println("google.load(\"visualization\",\"1\",{packages:[\"corechart\"]});");
+        fout.println("google.setOnLoadCallback(drawChart);");
+        fout.println("function drawChart() {");
+        fout.println("var data = google.visualization.arrayToDataTable([");
+        fout.println("['TestStatus', 'Count'],");
+        fout.println("['Passed ',"+totalPassedMethods+"],");
+        fout.println("['Failed ',"+totalFailedMethods +"],");
+        fout.println("['Skiped ',"+totalSkippedMethods+"]");
+        fout.println("]);");
+        fout.println("var options = {");
+        fout.println("  title: 'Test Case Report','width':550,'height':420,");
+        fout.println("is3D: true,};");
+        fout.println("var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));");
+        fout.println("chart.draw(data, options);");
+        fout.println("}");
+        fout.println("</script>");
+        fout.println("</head>");
+        fout.println("<body>");
+        fout.println(" <div id=\"piechart_3d\" style=\"width: 400px; height: 200px;\"></div>");
+        fout.println("</body>");
+        fout.println(" </html>");
+		
+        
 		// Write initial html codes neccessary for report
 		fout.println("<html>");
 		fout.println("<head>");
@@ -428,28 +507,35 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("<body>");
 		fout.println("<b><i><u><h1>Test results </h1></u></i></b>");
 
-		// Overview report block
-		int totalPassedMethods = 0;
-		int totalFailedMethods = 0;
-		int totalSkippedMethods = 0;
-		int totalMethods = 0;
-
-		// Iterating over each suite included in the test
-		for (ISuite suite : suites) {
-			// Following code gets the suite name
-			// Getting the results for the said suite
-			Map<String, ISuiteResult> suiteResults = suite.getResults();
-			for (ISuiteResult sr : suiteResults.values()) {
-				ITestContext tc = sr.getTestContext();
-				totalMethods = totalMethods + tc.getAllTestMethods().length;
-				totalPassedMethods = totalPassedMethods
-						+ tc.getPassedTests().getAllResults().size();
-				totalSkippedMethods = totalSkippedMethods
-						+ tc.getSkippedTests().getAllResults().size();
-				totalFailedMethods = totalMethods
-						- (totalPassedMethods + totalSkippedMethods);
-			}
-		}
+		fout.println("<table border=\"1\">");
+		fout.println("<tr style='background-color:#F5F5F5;'>");
+		fout.println("<td align=\"center\" colspan=\"2\"> <h3> System Information </h3> </td>");
+		fout.println("</tr>");
+		fout.println("<tr>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>Operating System</i></b></td>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+OS+"</i></b></td>");
+		fout.println("</tr>");
+		fout.println("<tr>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>System Architecture</i></b></td>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+arch+"</i></b></td>");
+		fout.println("</tr>");
+		fout.println("<tr>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>Browser</i></b></td>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+browser+"</i></b></td>");
+		fout.println("</tr>");
+		fout.println("<tr>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>Test Started On</i></b></td>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+testStartedOn+"</i></b></td>");
+		fout.println("</tr>");
+		fout.println("<tr>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>Test Ended On</i></b></td>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+testEndedOn+"</i></b></td>");
+		fout.println("</tr>");
+		fout.println("</table>");
+		fout.println("</br>");
+		fout.println("</br>");
+		
+		
 		fout.println("<table border=\"1\">");
 		fout.println("<tr style='background-color: ;'>");
 		fout.println("<td align=\"center\" colspan=\"4\"> <h3> Report Overview </h3> </td>");
