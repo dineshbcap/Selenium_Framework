@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.Augmenter;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
@@ -51,9 +52,27 @@ public class ExceptionHandler extends Exception{
 		}
 		e.getMessage();
     }
+    public File saveScreenShot() { 
+        WebDriver augmentedDriver = new Augmenter().augment(driver); 
+        File f = null; 
+        if (augmentedDriver instanceof TakesScreenshot) { 
+            f = ((TakesScreenshot) 
+augmentedDriver).getScreenshotAs(OutputType.FILE); 
+        } else { 
+        return new File("could-not-take-screenshot"); 
+        }
+		return f; 
+	}
     
     private void takeScreenshot(Exception e){
-		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+    	 WebDriver d;
+    	 if (driver.getClass().getName().equals("org.openqa.selenium.remote.RemoteWebDriver")) {
+    	      d = new Augmenter().augment(driver);
+    	    } else {
+    	      d = driver;
+    	    }
+    	    //File srcFile = ((TakesScreenshot)d).getScreenshotAs(OutputType.FILE);
+		File scrFile = ((TakesScreenshot)d).getScreenshotAs(OutputType.FILE);
 		
 		String workingdirectory = System.getProperty("user.dir");
 		

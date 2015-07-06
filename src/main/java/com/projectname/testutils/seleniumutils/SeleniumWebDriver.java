@@ -20,6 +20,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -428,7 +429,13 @@ public class SeleniumWebDriver {
 		 public void assertTrue(boolean condition, String message, WebDriver driver) {
 		    if(!condition) {
   	
-			    File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		    	WebDriver d;
+		    	 if (driver.getClass().getName().equals("org.openqa.selenium.remote.RemoteWebDriver")) {
+		    	      d = new Augmenter().augment(driver);
+		    	    } else {
+		    	      d = driver;
+		    	    }
+				File scrFile = ((TakesScreenshot)d).getScreenshotAs(OutputType.FILE);
 				String workingdirectory = System.getProperty("user.dir");
 				File scrFile1 = new File(workingdirectory +"/custom-test-report/Failure_Screenshot/AssertFailure.jpg");
 					

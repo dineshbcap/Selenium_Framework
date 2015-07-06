@@ -6,6 +6,7 @@ import static org.testng.internal.EclipseInterface.ASSERT_RIGHT;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,8 +21,11 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -29,6 +33,7 @@ import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 
 import com.projectname.functional.annotations.MapToTestLink;
 import com.projectname.testutils.genericutility.Config;
@@ -159,10 +164,11 @@ public class TestBaseClass {
 	 * @throws Exception
 	 */
 	@BeforeMethod(alwaysRun = true)
-	public final void genericSetUp() throws ExceptionHandler, IOException {
+	@Parameters({"webSite","browser","seleniumHost","seleniumPort"})
+	public final void genericSetUp(String webSite, String browser, String seleniumHost, String seleniumPort) throws ExceptionHandler, IOException {
 		// Instantiating Logger
 
-		driver = loadURL();
+		driver = loadURL(webSite,browser,seleniumHost, seleniumPort);
 		SeleniumWebDriver.driver = driver;
 		Layout layout = new PatternLayout(
 				"%d{dd-MMM-yyyy HH:mm:ss:SSS} %-5p %c{1}:%L - %m%n");
@@ -193,12 +199,12 @@ public class TestBaseClass {
 	 * @return
 	 * @throws IOException
 	 */
-	public WebDriver loadURL() throws IOException {
+	public WebDriver loadURL(String webSite,String browser,String seleniumHost, String seleniumPort) throws IOException {
 
 		// Instantiating the browser
-		driver = getWebDriver(Config.browser);
+		driver = getWebDriver(browser,seleniumHost, seleniumPort);
 		wait = new WebDriverWait(driver, 30);
-		driver.get(Config.URL);
+		driver.get(webSite);
 		
 		// Maximize the window
 		driver.manage().window().maximize();
@@ -214,10 +220,23 @@ public class TestBaseClass {
 	 * @return
 	 * @throws IOException
 	 */
-	public WebDriver getWebDriver(String browser) throws IOException {
+	public WebDriver getWebDriver(String browser,String seleniumHost, String seleniumPort) throws IOException {
 		switch (BrowserType.valueOf(browser)) {
 		case FIREFOX:
-			return new FirefoxDriver();
+			DesiredCapabilities capabilities = new DesiredCapabilities();
+			FirefoxProfile fireFoxProfile;
+			if(seleniumHost.contains("localhost")){
+				File profilePath = new File("C:\\FireFoxProfiles"); 
+	            fireFoxProfile = new FirefoxProfile(profilePath); 
+	           	driver=new FirefoxDriver(fireFoxProfile);
+			}else{
+			// if a matching driver cannot be located
+			URL url=new URL("http",seleniumHost,Integer.parseInt(seleniumPort),"/wd/hub");
+			capabilities.setBrowserName(browser);
+			driver = new RemoteWebDriver(url,capabilities);
+			}
+			return driver;
+			
 		case IE:
 			DesiredCapabilities ieCapabilities = DesiredCapabilities
 					.internetExplorer();
@@ -260,7 +279,8 @@ public class TestBaseClass {
 	 * @throws TestLinkAPIException
 	 */
 	@AfterMethod(alwaysRun = true)
-	public final void tearDown(ITestResult result) throws IOException,
+	@Parameters({"seleniumHost"})
+	public final void tearDown(ITestResult result, String host) throws IOException,
 			TestLinkAPIException {
 
 		String dateTimeStamp = DateTimeUtility
@@ -307,7 +327,14 @@ public class TestBaseClass {
 						+ result.getName() + " " + dateTimeStamp + ".png";
 				log.info("Captured Screenshot : " + destFile);
 				status = "FAIL";
-				File scrFile = SeleniumWebDriver.takeScreenshot(driver);
+				WebDriver d;
+		    	 if (driver.getClass().getName().equals("org.openqa.selenium.remote.RemoteWebDriver")) {
+		    	      d = new Augmenter().augment(driver);
+		    	    } else {
+		    	      d = driver;
+		    	    }
+		    	    //File srcFile = ((TakesScreenshot)d).getScreenshotAs(OutputType.FILE);
+				File scrFile = ((TakesScreenshot)d).getScreenshotAs(OutputType.FILE);
 				FileUtility.copyFile(scrFile, new File(destFile));
 			}
 		} catch (Exception e) {
