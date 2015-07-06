@@ -12,6 +12,21 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import org.testng.IReporter;
 import org.testng.ISuite;
@@ -250,8 +265,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		out.println("<td><b><i>Parameter-1</i></b></td>");
 		out.println("<td><b><i>Parameter-2</i></b></td>");
 		out.println("<td><b><i>Status</i></b></td>");
-		out.println("<td><b><i>Screenshot</i></b></td>");
 		out.println("<td><b><i>Calling-Class with Linenumber</i></b></td>");
+		out.println("<td><b><i>Screenshot</i></b></td>");
 		out.println("</tr>");
 	}
 
@@ -313,13 +328,13 @@ public class CustomizedReporter implements ITestListener, IReporter,
 				// So, if it is like that, we can not use that name as a file
 				// name
 				// So, Replacing the value with empty space
-				temp[5] = temp[5].replace(".<init>", "");
+				temp[4] = temp[5].replace(".<init>", "");
 				// create the screenshot path
-				String pathToScreenshot = "../Failure_Screenshot/" + temp[5]
+				String pathToScreenshot = "../Failure_Screenshot/" + temp[4]
 						+ ".jpg";
 				// creating mapping for failed step(Link to screen shot and
 				// embed the screenshot in that step)
-				temp[4] = "<a href=\'" + pathToScreenshot + "\'> <img src=\'"
+				temp[5] = "<a href=\'" + pathToScreenshot + "\'> <img src=\'"
 						+ pathToScreenshot
 						+ "\' height=\"100\" width=\"100\"> </a>";
 			}
@@ -337,7 +352,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 			else {
 				fout.println("<tr class=\"status_passed\" title=\"\" alt=\"\">");
 				temp[3]="<center><img src='../images/pass.jpg' title=\"Pass\" height=\"20\" width=\"20\"></center>";
-
+				temp[4]=temp[5];
+				temp[5]="";
 			}
 			// this will create separate '<td>' for messages inside the action
 			for (String temp1 : temp) {
@@ -573,7 +589,63 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		// used for write every thing in html file
 		fout.flush();
 		fout.close();
+		sendMail();
+		
 	}
+	public void sendMail() {
+		MimeBodyPart messageBodyPart = new MimeBodyPart();
+		Multipart multipart = new MimeMultipart();
+		// Get system properties
+		System.setProperty("java.net.preferIPv4Stack" , "true");
+	      Properties properties = System.getProperties();
+		// Setup mail server
+	      properties.put("mail.transport.protocol", "smtp");
+	     // properties.put("mail.smtp.socketFactory.port", "465");
+	     // properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+	     // properties.put("mail.smtp.starttls.enable", "true");
+	      properties.put("mail.smtp.auth", true);
+	      properties.put("mail.smtp.host", "smtp.gmail.com");
+	      properties.put("mail.smtp.auth", true);
+	      //properties.setProperty("mail.smtp.host", host);
+
+	      // Get the default Session object.
+	      Session session = Session.getInstance(properties,
+	              new javax.mail.Authenticator() {
+	                  protected PasswordAuthentication getPasswordAuthentication() {
+	                      return new PasswordAuthentication(Config.mailFrom, "kinjalsaranya");
+	                  }
+	              });
+		 try{
+	         // Create a default MimeMessage object.
+	         MimeMessage msg = new MimeMessage(session);
+
+	         // Set From: header field of the header.
+	         msg.setFrom(new InternetAddress(Config.mailFrom));
+
+	         // Set To: header field of the header.
+	         msg.addRecipient(Message.RecipientType.TO,
+	                                  new InternetAddress(Config.mailTo));
+
+	         // Set Subject: header field
+	         msg.setSubject("This is the Subject Line!");
+
+	         File file= new File(TestBaseClass.screenshotBasePath + File.separator
+						+ "custom-test-report"+File.separator+"index.html");
+	         // Now set the actual message
+	         DataSource source = new FileDataSource(file);
+	         messageBodyPart.setDataHandler(new DataHandler(source));
+	         messageBodyPart.setFileName("index.html");
+	         multipart.addBodyPart(messageBodyPart);
+	         msg.setSubject("Execution Report");
+	         msg.setContent(multipart);
+
+	         // Send message
+	         Transport.send(msg);
+	         System.out.println("Sent message successfully....");
+	      }catch (MessagingException mex) {
+	         mex.printStackTrace();
+	      }
+		}
 
 	public void generateIndexHtmlAreas(String status) {
 		// for get the current directory

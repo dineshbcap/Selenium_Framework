@@ -78,7 +78,7 @@ public class TestBaseClass {
 	/**
 	 * Getting the base path of screen shot
 	 */
-	private String screenshotBasePath;
+	static String screenshotBasePath;
 	@SuppressWarnings("unused")
 	private String logBasePath;
 	private String logFile;

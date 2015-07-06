@@ -9,7 +9,7 @@ public class Config {
 	
 	//Retry Analyzer Initialization
 	//Change here to specify the number of attempts
-	public static final int RETRYCOUNTER = 2; 
+	public static final int RETRYCOUNTER = 1; 
 	
 	public static int retryCount=0;
 	
@@ -22,6 +22,8 @@ public class Config {
 	public static String URL="http://systems.aspiresys.com/";
 	public static String userName="priya.marimuthu";
 	public static String password="riya@123";
+	public static String mailFrom="srnmudaliar@gmail.com";
+	public static String mailTo="saranya.subramani@aspiresys.com";
 	
 	//Identifier Types
 	public static final String NAME = "name";
