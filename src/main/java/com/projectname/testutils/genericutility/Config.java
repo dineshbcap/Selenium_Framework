@@ -16,7 +16,7 @@ public class Config {
 	//TestLink Update
 	public static Boolean testLinkUpdate = false;
 	//Browser
-	public static String browser="CHROME";
+	public static String browser="FIREFOX";
 
 	//Credentials
 	public static String URL="http://systems.aspiresys.com/";

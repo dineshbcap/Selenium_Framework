@@ -293,6 +293,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 			if (temp[3].toLowerCase().contains("fail")) {
 				// If Fail create '<tr>' tag with 'status_failed' class(Which is
 				// used for create 'red' background color for failed cases)
+				temp[3]="<center><img src='../images/fail.jpg' height=\"20\" width=\"20\"></center>";
 				fout.println("<tr class=\"status_failed\" title=\"\" alt=\"\">");
 				// If failed in constructor, the function name will be like
 				// '<init>'.
@@ -315,13 +316,14 @@ public class CustomizedReporter implements ITestListener, IReporter,
 				// So, If it is a title then create '<tr>' tag with class name
 				// 'title'
 				fout.println("<tr class=\"title\" title=\"\" alt=\"\">");
-				fout.println("<td colspan=\"6\">" + temp[0] + "</td>");
+				fout.println("<td colspan=\"6\">"+"<img src='../images/info.png' height=\"10\" width=\"10\">" + temp[0] +"</td>");
 				fout.println("</tr>");
 				continue;
 			}
 			// Else status is passed
 			else {
 				fout.println("<tr class=\"status_passed\" title=\"\" alt=\"\">");
+				temp[3]="<center><img src='../images/pass.jpg' height=\"20\" width=\"20\"></center>";
 			}
 			// this will create separate '<td>' for messages inside the action
 			for (String temp1 : temp) {
