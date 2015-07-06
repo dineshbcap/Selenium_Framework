@@ -612,7 +612,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	      Session session = Session.getInstance(properties,
 	              new javax.mail.Authenticator() {
 	                  protected PasswordAuthentication getPasswordAuthentication() {
-	                      return new PasswordAuthentication(Config.mailFrom, "kinjalsaranya");
+	                      return new PasswordAuthentication(Config.mailFrom, "asdfewrq");
 	                  }
 	              });
 		 try{
