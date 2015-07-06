@@ -466,7 +466,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
         fout.println("['Skiped ',"+totalSkippedMethods+"]");
         fout.println("]);");
         fout.println("var options = {");
-        fout.println("  title: 'Test Case Report','width':550,'height':420,");
+        fout.println("  title: 'Test Summary','width':550,'height':420,");
         fout.println("is3D: true,};");
         fout.println("var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));");
         fout.println("chart.draw(data, options);");
@@ -577,6 +577,43 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("<br>");
 		fout.println("<br>");
 		fout.println("<br>");
+	
+		fout.println("<br>");
+		fout.println("Filter:");
+	    fout.println("<select align=\"center\" id=\"dropDown\" onchange=\"changeDropDown()\">");
+	    fout.println("<option value=\"All\">All</option>");
+	    fout.println("<option value=\"Passed\">Passed</option>");
+	    fout.println("<option value=\"Failed\">Failed</option>");
+	    fout.println("<option value=\"Skipped\">Skipped</option>");
+	    fout.println("</select>");
+	    fout.println("<br>");
+	    fout.println("<br>");
+
+	    fout.println("<script type=\"text/javascript\">");
+	    fout.println("function changeDropDown(){");
+	    fout.println("var tabToDisplay=document.getElementById(\"dropDown\").value;");
+	    fout.println("if(tabToDisplay && tabToDisplay==\"All\") {");
+	    fout.println("document.getElementById(\"passTable\").style.display = \"initial\";");
+	    fout.println("document.getElementById(\"failTable\").style.display = \"initial\";");
+	    fout.println("document.getElementById(\"skipTable\").style.display = \"initial\";");
+	    fout.println("}");
+	    fout.println("else if(tabToDisplay && tabToDisplay==\"Passed\") {");
+	    fout.println("document.getElementById(\"passTable\").style.display = \"initial\";");
+	    fout.println("document.getElementById(\"failTable\").style.display = \"none\";");
+	    fout.println("document.getElementById(\"skipTable\").style.display = \"none\";");
+	    fout.println("}");
+	    fout.println("else if(tabToDisplay && tabToDisplay==\"Failed\"){");
+	    fout.println("document.getElementById(\"passTable\").style.display = \"none\";");
+	    fout.println("document.getElementById(\"failTable\").style.display = \"initial\";");
+	    fout.println("document.getElementById(\"skipTable\").style.display = \"none\";");
+	    fout.println("}");
+	    fout.println("else if(tabToDisplay && tabToDisplay==\"Skipped\") {");
+	    fout.println("document.getElementById(\"passTable\").style.display = \"none\";");
+	    fout.println("document.getElementById(\"failTable\").style.display = \"none\";");
+	    fout.println("document.getElementById(\"skipTable\").style.display = \"initial\";");
+	    fout.println("}");
+	    fout.println("}");
+	    fout.println("</script>");
 		// Passed cases
 		generateIndexHtmlAreas(PASSED);
 		// Failed Cases
@@ -652,8 +689,6 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		String workingdirectory = System.getProperty("user.dir");
 		File file = new File(workingdirectory + "/custom-test-report");
 		String[] names = file.list();
-		fout.println("<table border=\"1\">");
-		fout.println("<tbody>");
 		flag = true;
 		for (String fullClassName : names) {
 			String splitClassName[] = fullClassName.split("\\.");
@@ -687,16 +722,22 @@ public class CustomizedReporter implements ITestListener, IReporter,
 							if (flag) {
 								if (status.equalsIgnoreCase(PASSED)) {
 									// Passed
+									fout.println("<table id=\"passTable\" border=\"1\">");
+									fout.println("<tbody>");
 									fout.println("<tr style='background-color: #ccffcc;'>");
 									fout.println("<td align=\"center\" colspan=\"3\"> Passed cases </td>");
 									fout.println("</tr>");
 								} else if (status.equalsIgnoreCase(FAILED)) {
 									// Failed
+									fout.println("<table id=\"failTable\" border=\"1\">");
+									fout.println("<tbody>");
 									fout.println("<tr style='background-color: #ffcccc;'>");
 									fout.println("<td align=\"center\" colspan=\"3\"> Failed cases </td>");
 									fout.println("</tr>");
 								} else {
 									// Skipped
+									fout.println("<table id=\"skipTable\" border=\"1\">");
+									fout.println("<tbody>");
 									fout.println("<tr style='background-color: #B2ACAC;'>");
 									fout.println("<td align=\"center\" colspan=\"3\">"
 											+ "Skipped cases" + "</td>");
