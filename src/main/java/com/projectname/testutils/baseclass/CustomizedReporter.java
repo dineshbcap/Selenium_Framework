@@ -526,7 +526,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 
 		fout.println("<table border=\"1\">");
 		fout.println("<tr style='background-color:#F5F5F5;'>");
-		fout.println("<td align=\"center\" colspan=\"2\"> <h3> System Information </h3> </td>");
+		fout.println("<td align=\"center\" colspan=\"2\"><b>System Information</b></td>");
 		fout.println("</tr>");
 		fout.println("<tr>");
 		fout.println("<td align=\"justify\" class=\"report\"><b><i>Operating System</i></b></td>");
@@ -555,7 +555,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		
 		fout.println("<table border=\"1\">");
 		fout.println("<tr style='background-color: ;'>");
-		fout.println("<td align=\"center\" colspan=\"4\"> <h3> Report Overview </h3> </td>");
+		fout.println("<td align=\"center\" colspan=\"4\"><b>Report Overview</b></td>");
 		fout.println("</tr>");
 		fout.println("<tr style='background-color: #F5F5F5;'>");
 		fout.println("<td align=\"center\" class=\"report\"><b><i>Total Test Methods</i></b></td>");
@@ -579,7 +579,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("<br>");
 	
 		fout.println("<br>");
-		fout.println("Filter:");
+		fout.println("Choose to filter your results:");
 	    fout.println("<select align=\"center\" id=\"dropDown\" onchange=\"changeDropDown()\">");
 	    fout.println("<option value=\"All\">All</option>");
 	    fout.println("<option value=\"Passed\">Passed</option>");
@@ -588,26 +588,44 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	    fout.println("</select>");
 	    fout.println("<br>");
 	    fout.println("<br>");
-
+	    
+	    fout.println("<br>");
+	    fout.println("<br>");
 	    fout.println("<script type=\"text/javascript\">");
 	    fout.println("function changeDropDown(){");
 	    fout.println("var tabToDisplay=document.getElementById(\"dropDown\").value;");
 	    fout.println("if(tabToDisplay && tabToDisplay==\"All\") {");
+	    fout.println("document.getElementById(\"updateValue\").innerHTML =\"\";");
 	    fout.println("document.getElementById(\"passTable\").style.display = \"initial\";");
 	    fout.println("document.getElementById(\"failTable\").style.display = \"initial\";");
 	    fout.println("document.getElementById(\"skipTable\").style.display = \"initial\";");
 	    fout.println("}");
 	    fout.println("else if(tabToDisplay && tabToDisplay==\"Passed\") {");
+	    fout.println("var myElem = document.getElementById('passTable');");
+	    fout.println("if (myElem == null)");
+	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"Search Result Not Found...!!!\";");
+	    fout.println(" else");
+	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"\";");
 	    fout.println("document.getElementById(\"passTable\").style.display = \"initial\";");
 	    fout.println("document.getElementById(\"failTable\").style.display = \"none\";");
 	    fout.println("document.getElementById(\"skipTable\").style.display = \"none\";");
 	    fout.println("}");
 	    fout.println("else if(tabToDisplay && tabToDisplay==\"Failed\"){");
+	    fout.println("var myElem = document.getElementById('failTable');");
+	    fout.println("if (myElem == null)");
+	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"Search Result Not Found...!!!\";");
+	    fout.println("else");
+	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"\";");
 	    fout.println("document.getElementById(\"passTable\").style.display = \"none\";");
 	    fout.println("document.getElementById(\"failTable\").style.display = \"initial\";");
 	    fout.println("document.getElementById(\"skipTable\").style.display = \"none\";");
 	    fout.println("}");
 	    fout.println("else if(tabToDisplay && tabToDisplay==\"Skipped\") {");
+	    fout.println("var myElem = document.getElementById('skipTable');");
+	    fout.println("if (myElem == null)");
+	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"Search Result Not Found...!!!\";");
+	    fout.println("else");
+	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"\";");
 	    fout.println("document.getElementById(\"passTable\").style.display = \"none\";");
 	    fout.println("document.getElementById(\"failTable\").style.display = \"none\";");
 	    fout.println("document.getElementById(\"skipTable\").style.display = \"initial\";");
@@ -622,6 +640,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		generateIndexHtmlAreas(SKIPPED);
 		// used for create end html tags
 		fout.println("</tbody>");
+		fout.println("<br>");
+		fout.println("<p id=\"updateValue\"></p>");
 		fout.println("</body></html>");
 		// used for write every thing in html file
 		fout.flush();
@@ -725,14 +745,14 @@ public class CustomizedReporter implements ITestListener, IReporter,
 									fout.println("<table id=\"passTable\" border=\"1\">");
 									fout.println("<tbody>");
 									fout.println("<tr style='background-color: #ccffcc;'>");
-									fout.println("<td align=\"center\" colspan=\"3\"> Passed cases </td>");
+									fout.println("<td align=\"center\" colspan=\"3\"><b> Passed cases</b> </td>");
 									fout.println("</tr>");
 								} else if (status.equalsIgnoreCase(FAILED)) {
 									// Failed
 									fout.println("<table id=\"failTable\" border=\"1\">");
 									fout.println("<tbody>");
 									fout.println("<tr style='background-color: #ffcccc;'>");
-									fout.println("<td align=\"center\" colspan=\"3\"> Failed cases </td>");
+									fout.println("<td align=\"center\" colspan=\"3\"> <b>Failed cases</b> </td>");
 									fout.println("</tr>");
 								} else {
 									// Skipped
@@ -740,7 +760,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 									fout.println("<tbody>");
 									fout.println("<tr style='background-color: #B2ACAC;'>");
 									fout.println("<td align=\"center\" colspan=\"3\">"
-											+ "Skipped cases" + "</td>");
+											+ "<b>Skipped cases</b>" + "</td>");
 									fout.println("</tr>");
 								}
 
