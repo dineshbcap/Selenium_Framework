@@ -4,13 +4,14 @@
     <listeners>
       <listener class-name="org.uncommons.reportng.HTMLReporter"/>
       <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+      
   </listeners>    
   <parameter name="webSite" value="http://systems.aspiresys.com/"/>  
    <parameter name="browser" value="FIREFOX"/>
       <parameter name="seleniumHost" value="localhost"/>
   <parameter name="seleniumPort" value="4444"/>    
 	
-    <test name="com.projectname.test.functional.login">
+    <test name="tests.login">
     
      <groups>  
 		   <define name="Login Test">    
@@ -23,7 +24,7 @@
   
   
     <packages>
-      <package name="com.projectname.test.functional.login"/>
+      <package name="tests.login"/>
     </packages>
 	</test>
 </suite> <!-- [EBS Selenium Automated QA Test]] -->
