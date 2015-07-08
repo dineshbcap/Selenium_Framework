@@ -555,9 +555,9 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		
 		fout.println("<table border=\"1\">");
 		fout.println("<tr style='background-color: ;'>");
-		fout.println("<td align=\"center\" colspan=\"4\"><b>Report Overview</b></td>");
+		fout.println("<td  style='background-color: #F5F5F5;' align=\"center\" colspan=\"4\"><b>Report Overview</b></td>");
 		fout.println("</tr>");
-		fout.println("<tr style='background-color: #F5F5F5;'>");
+		fout.println("<tr>");
 		fout.println("<td align=\"center\" class=\"report\"><b><i>Total Test Methods</i></b></td>");
 		fout.println("<td align=\"center\" class=\"report\"><b><i>Passed Test Methods</i></b></td>");
 		fout.println("<td align=\"center\" class=\"report\"><b><i>Failed Test Methods</i></b></td>");
@@ -574,7 +574,6 @@ public class CustomizedReporter implements ITestListener, IReporter,
 				+ totalSkippedMethods + "</i></b></td>");
 		fout.println("</tr>");
 		fout.println("</table>");
-		fout.println("<br>");
 		fout.println("<br>");
 		fout.println("<br>");
 	
@@ -603,7 +602,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	    fout.println("else if(tabToDisplay && tabToDisplay==\"Passed\") {");
 	    fout.println("var myElem = document.getElementById('passTable');");
 	    fout.println("if (myElem == null)");
-	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"Search Result Not Found...!!!\";");
+	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"Search Result Not Found.\";");
 	    fout.println(" else");
 	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"\";");
 	    fout.println("document.getElementById(\"passTable\").style.display = \"initial\";");
@@ -613,7 +612,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	    fout.println("else if(tabToDisplay && tabToDisplay==\"Failed\"){");
 	    fout.println("var myElem = document.getElementById('failTable');");
 	    fout.println("if (myElem == null)");
-	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"Search Result Not Found...!!!\";");
+	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"Search Result Not Found.\";");
 	    fout.println("else");
 	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"\";");
 	    fout.println("document.getElementById(\"passTable\").style.display = \"none\";");
@@ -623,7 +622,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	    fout.println("else if(tabToDisplay && tabToDisplay==\"Skipped\") {");
 	    fout.println("var myElem = document.getElementById('skipTable');");
 	    fout.println("if (myElem == null)");
-	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"Search Result Not Found...!!!\";");
+	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"Search Result Not Found.\";");
 	    fout.println("else");
 	    fout.println("document.getElementById(\"updateValue\").innerHTML = \"\";");
 	    fout.println("document.getElementById(\"passTable\").style.display = \"none\";");
