@@ -98,7 +98,7 @@ public class SeleniumWebDriver {
 	 */
 	public static void causeMinorTimeDelay() {
 		driver.manage().timeouts()
-				.implicitlyWait(Config.DELAY_TIME, TimeUnit.SECONDS);
+				.implicitlyWait(Config.delayTime, TimeUnit.SECONDS);
 	}
 
 	/**
@@ -217,7 +217,7 @@ public class SeleniumWebDriver {
 	
 	public static boolean click(final By ajaxElementName){
 		try {
-			waitForElement(ajaxElementName, Config.AVG_WAIT_TIME_FOR_ELEMENT);
+			waitForElement(ajaxElementName, Config.avgWaitTimeForElement);
 			if (driver.findElement(ajaxElementName).isDisplayed()
 					&& driver.findElement(ajaxElementName).isEnabled()) {
 				driver.findElement(ajaxElementName).click();
@@ -248,7 +248,7 @@ public class SeleniumWebDriver {
 	public static boolean isChecked(final By ajaxCheckboxName){
 		try{
 			if (waitForElement(ajaxCheckboxName,
-					Config.AVG_WAIT_TIME_FOR_ELEMENT)) {
+					Config.avgWaitTimeForElement)) {
 				driver.findElement(ajaxCheckboxName).isSelected();
 				boolean checkBoxStatus = driver.findElement(ajaxCheckboxName)
 						.isSelected();
@@ -351,7 +351,7 @@ public class SeleniumWebDriver {
 		valueForSelection = valueForSelection != null ? valueForSelection
 				.trim() : "";
 		try {
-			waitForElement(listName, Config.AVG_WAIT_TIME_FOR_ELEMENT);
+			waitForElement(listName, Config.avgWaitTimeForElement);
 			if (driver.findElement(listName).isDisplayed()) {
 				Select elSelect = new Select(driver.findElement(listName));
 				elSelect.selectByVisibleText(valueForSelection);
@@ -404,7 +404,7 @@ public class SeleniumWebDriver {
 	public static String getValue(By elementName){
 
 		try {
-			if (waitForElement(elementName, Config.AVG_WAIT_TIME_FOR_ELEMENT)) {
+			if (waitForElement(elementName, Config.avgWaitTimeForElement)) {
 				returnString=driver.findElement(elementName).getAttribute("value");
 				status = "Pass";
 			} 

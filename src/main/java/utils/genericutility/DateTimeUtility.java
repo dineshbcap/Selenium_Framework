@@ -9,6 +9,8 @@ import java.util.Date;
 
 public class DateTimeUtility {
 
+	static String dateFormatMMddyyyy="MM/dd/yyyy";
+	static String dateFormatyyyyMMdd="yyyy-MM-dd";
 	/**
 	 * This method returns the current date and time in format dd-MMM-yyyy HH-mm-ss
 	 * 
@@ -17,8 +19,7 @@ public class DateTimeUtility {
 	public static String getCurrentDateAndTime() {
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyHHmmss");
 		Date date = new Date();
-		String time = sdf.format(date);
-		return time;
+		return sdf.format(date);
 	}
 	
 	/**
@@ -29,15 +30,13 @@ public class DateTimeUtility {
 	public static String getCurrentDateAndTimeInLoggerFormat() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH-mm-ss");
 		Date date = new Date();
-		String time = sdf.format(date);
-		return time;
+		return sdf.format(date);
 	}
 
 	public static String getCurrentDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
-		String time = sdf.format(date);
-		return time;
+		return sdf.format(date); 
 	}
 	/**
 	 * This method returns the current date and time in format dd-MMM-yy hh.mm.ss.SSSSSSSSS a
@@ -47,8 +46,7 @@ public class DateTimeUtility {
 	public static String getCurrentDateAndTimeDDMMYY() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSSSSS a");
 		Date date = new Date();
-		String time = sdf.format(date);
-		return time;
+		return sdf.format(date); 
 	}
 	
 	/**
@@ -59,8 +57,7 @@ public class DateTimeUtility {
 	public static String getCurrentYear() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		Date date = new Date();
-		String time = sdf.format(date);
-		return time;
+		return sdf.format(date); 
 	}
 
 	/**
@@ -71,8 +68,7 @@ public class DateTimeUtility {
 	public static String getToday() {
 		Date date = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
-		String today = dateFormat.format(date.getTime());
-		return today;
+		return dateFormat.format(date.getTime()); 
 	}
 	
 	/**
@@ -83,8 +79,7 @@ public class DateTimeUtility {
 	public static String getTime() {
 		Date date = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("hhmm");
-		String today = dateFormat.format(date.getTime());
-		return today;
+		return dateFormat.format(date.getTime()); 
 	}
 
 	/**
@@ -93,11 +88,10 @@ public class DateTimeUtility {
 	 * @return date - in the above mentioned format
 	 */
 	public static String getYesterday() {
-		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		DateFormat dateFormat = new SimpleDateFormat(dateFormatMMddyyyy);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);    
-        String yesterday = dateFormat.format(cal.getTime());
-		return yesterday;
+        return dateFormat.format(cal.getTime()); 
 	}
 
 	/***
@@ -108,11 +102,10 @@ public class DateTimeUtility {
 	 * @throws ParseException 
 	 */
 	public static String getPrevday(String testDate) throws ParseException {
-		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		DateFormat dateFormat = new SimpleDateFormat(dateFormatMMddyyyy);
         Date date = dateFormat.parse(testDate);
         Date oneDayBefore = new Date(date.getTime() - 2); 
-        String result = dateFormat.format(oneDayBefore);
-		return result;
+        return dateFormat.format(oneDayBefore); 
 		
 	}
 
@@ -124,11 +117,10 @@ public class DateTimeUtility {
 	 * @throws ParseException 
 	 */
 	public static String getNextday(String testDate) throws ParseException {
-		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		DateFormat dateFormat = new SimpleDateFormat(dateFormatMMddyyyy);
         Date date = dateFormat.parse(testDate);
         Date oneDayBefore = new Date(date.getTime() +1); 
-        String result = dateFormat.format(oneDayBefore);
-		return result;
+        return dateFormat.format(oneDayBefore); 
 	}
 
 	/***
@@ -138,7 +130,7 @@ public class DateTimeUtility {
 	 * @return date - in format DD-MMM-yyyy
 	 */
 	public static String formatDateToDDMonYYYY(String dateToformat) throws ParseException {		
-		SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat format1 = new SimpleDateFormat(dateFormatMMddyyyy);
 		SimpleDateFormat format2 = new SimpleDateFormat("dd-MMM-yy");
 		Date date = format1.parse(dateToformat);
 		return format2.format(date);
@@ -151,8 +143,8 @@ public class DateTimeUtility {
 	 * @return date - in format DD-MMM-yyyy
 	 */
 	public static String formatDateToyyyyMMdd(String dateToformat) throws ParseException {		
-		SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");
-		SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format1 = new SimpleDateFormat(dateFormatMMddyyyy);
+		SimpleDateFormat format2 = new SimpleDateFormat(dateFormatyyyyMMdd);
 		Date date = format1.parse(dateToformat);
 		return format2.format(date);
 	}
@@ -163,7 +155,7 @@ public class DateTimeUtility {
 	 * @return date - in format dd/MM/yy
 	 */
 	public static String formatDateToDDMMYY(String dateToformat) throws ParseException {
-		SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat format1 = new SimpleDateFormat(dateFormatMMddyyyy);
 		SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yy");
 		Date date = format1.parse(dateToformat);
 		return format2.format(date);
@@ -189,7 +181,7 @@ public class DateTimeUtility {
 	 * @return nextDate - in format dd-MM-yy
 	 */
 	public static String formatDateToddMMYYYY(String dateToformat) throws ParseException {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format1 = new SimpleDateFormat(dateFormatyyyyMMdd);
 		SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = format1.parse(dateToformat);
 		return format2.format(date);
@@ -202,8 +194,8 @@ public class DateTimeUtility {
 	 * @return date - in format MM/dd/yy
 	 */
 	public static String formatDateToMMDDYYYY(String dateToformat) throws ParseException {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat format1 = new SimpleDateFormat(dateFormatyyyyMMdd);
+		SimpleDateFormat format2 = new SimpleDateFormat(dateFormatMMddyyyy);
 		Date date = format1.parse(dateToformat);
 		return format2.format(date);
 	}
@@ -215,7 +207,7 @@ public class DateTimeUtility {
 	 * @return date - in format dd/MM/yy
 	 */
 	public static String formatDateToddMMMYY(String dateToformat) throws ParseException {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format1 = new SimpleDateFormat(dateFormatyyyyMMdd);
 		SimpleDateFormat format2 = new SimpleDateFormat("dd/MMM/yy");
 		Date date = format1.parse(dateToformat);
 		return format2.format(date);
@@ -239,7 +231,7 @@ public class DateTimeUtility {
 	 * @return date - in format MM/dd/yy
 	 */
 	public static String formatDateToddMMyyyy(String dateToformat) throws ParseException {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format1 = new SimpleDateFormat(dateFormatyyyyMMdd);
 		SimpleDateFormat format2 = new SimpleDateFormat("dd.MM.yyyy");
 		Date date = format1.parse(dateToformat);
 		return format2.format(date);
@@ -252,7 +244,7 @@ public class DateTimeUtility {
 	 * @return date - in format dd/MMM/yy
 	 */
 	public static String formatDateToddMMMyy(String dateToformat) throws ParseException {
-		SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat format1 = new SimpleDateFormat(dateFormatMMddyyyy);
 		SimpleDateFormat format2 = new SimpleDateFormat("dd-MMM-yy");
 		Date date = format1.parse(dateToformat);
 		return format2.format(date);
@@ -266,7 +258,7 @@ public class DateTimeUtility {
 	 */
 	public static String formatDateToMMddyyyy(String dateToformat) throws ParseException {
 		SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yy");
-		SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat format2 = new SimpleDateFormat(dateFormatMMddyyyy);
 		Date date = format1.parse(dateToformat);
 		return format2.format(date);
 	}
@@ -278,8 +270,8 @@ public class DateTimeUtility {
 	 * @return date - in format MM/dd/yy
 	 */
 	public static String formatDateToMMddYYYY(String dateToformat) throws ParseException {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat format1 = new SimpleDateFormat(dateFormatyyyyMMdd);
+		SimpleDateFormat format2 = new SimpleDateFormat(dateFormatMMddyyyy);
 		Date date = format1.parse(dateToformat);
 		if(dateToformat.equals("")){
 			return dateToformat;

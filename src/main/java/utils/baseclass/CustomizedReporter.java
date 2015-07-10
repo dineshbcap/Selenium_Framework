@@ -178,6 +178,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	}
 
 	private PrintWriter createRequiredFile(String testName) throws IOException {
+		String workingdirectory = System.getProperty("user.dir");
+		new File(workingdirectory+"\\temp.txt");
 		return new PrintWriter(new BufferedWriter(new FileWriter(new File(
 				screenshotDir, testName + ".html"), true)));
 	}
@@ -349,6 +351,14 @@ public class CustomizedReporter implements ITestListener, IReporter,
 				fout.println("<td align=\"middle\"><img src='../images/info.png' title=\"Info\" height=\"20\" width=\"20\" ></td>");
 				fout.println("<td colspan=\"5\">"+temp[0]+"</td>");
 				//fout.println("<td colspan=\"6\">"+"<img src='../images/info.png' title=\"Info\" height=\"10\" width=\"10\">" + temp[0] +"</td>");
+				String workingdirectory = System.getProperty("user.dir");
+				try {
+				    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(workingdirectory+"/temp.txt", true)));
+				    out.println(temp[0]);
+				    out.close();
+				} catch (IOException e) {
+				    //exception handling left as an exercise for the reader
+				}
 				fout.println("</tr>");
 				continue;
 			}
