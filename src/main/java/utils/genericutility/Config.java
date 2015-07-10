@@ -22,8 +22,10 @@ public class Config {
 	public static String URL="http://systems.aspiresys.com/";
 	public static String userName="priya.marimuthu";
 	public static String password="riya@123";
-	public static String mailFrom="priya.marinuthucom";
+	public static String mailFrom="priya.marimuthu@aspiresys.com";
 	public static String mailTo="saranya.subramani@aspiresys.com";
+	public static String mailPwd="proxima@123";
+	public static String mailSmtp="mail.aspiresystems.net";
 	
 	//Identifier Types
 	public static final String NAME = "name";

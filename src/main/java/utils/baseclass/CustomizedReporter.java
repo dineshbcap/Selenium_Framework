@@ -674,19 +674,17 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	      Properties properties = System.getProperties();
 		// Setup mail server
 	      properties.put("mail.transport.protocol", "smtp");
-	     // properties.put("mail.smtp.socketFactory.port", "465");
-	     // properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-	     // properties.put("mail.smtp.starttls.enable", "true");
+	      properties.put("mail.smtp.socketFactory.port", "465");
+	      properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+	      properties.put("mail.smtp.starttls.enable", "true");
 	      properties.put("mail.smtp.auth", true);
-	      properties.put("mail.smtp.host", "smtp.gmail.com");
-	      properties.put("mail.smtp.auth", true);
-	      //properties.setProperty("mail.smtp.host", host);
-
+	      properties.put("mail.smtp.host", Config.mailSmtp);
+	
 	      // Get the default Session object.
 	      Session session = Session.getInstance(properties,
 	              new javax.mail.Authenticator() {
 	                  protected PasswordAuthentication getPasswordAuthentication() {
-	                      return new PasswordAuthentication(Config.mailFrom, "asdfewrq");
+	                      return new PasswordAuthentication(Config.mailFrom,Config.mailPwd);
 	                  }
 	              });
 		 try{
@@ -702,7 +700,12 @@ public class CustomizedReporter implements ITestListener, IReporter,
 
 	         // Set Subject: header field
 	         msg.setSubject("This is the Subject Line!");
-
+	         try {
+				TestBaseClass.screenshotBasePath = new File(".").getCanonicalPath();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	         File file= new File(TestBaseClass.screenshotBasePath + File.separator
 						+ "custom-test-report"+File.separator+"index.html");
 	         // Now set the actual message
