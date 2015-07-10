@@ -1,5 +1,7 @@
 package utils.baseclass;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -261,10 +263,10 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		}
 		out.println("<br><br>");
 		out.println("<tr style='background-color: #B2ACAC;'>");
+		out.println("<td><b><i>Status</i></b></td>");
 		out.println("<td><b><i>Selenium-Command</i></b></td>");
 		out.println("<td><b><i>Parameter-1</i></b></td>");
 		out.println("<td><b><i>Parameter-2</i></b></td>");
-		out.println("<td><b><i>Status</i></b></td>");
 		out.println("<td><b><i>Calling-Class with Linenumber</i></b></td>");
 		out.println("<td><b><i>Screenshot</i></b></td>");
 		out.println("</tr>");
@@ -344,7 +346,9 @@ public class CustomizedReporter implements ITestListener, IReporter,
 				// So, If it is a title then create '<tr>' tag with class name
 				// 'title'
 				fout.println("<tr class=\"title\" title=\"\" alt=\"\">");
-				fout.println("<td colspan=\"6\">"+"<img src='../images/info.png' title=\"Info\" height=\"10\" width=\"10\">" + temp[0] +"</td>");
+				fout.println("<td align=\"middle\"><img src='../images/info.png' title=\"Info\" height=\"20\" width=\"20\" ></td>");
+				fout.println("<td colspan=\"5\">"+temp[0]+"</td>");
+				//fout.println("<td colspan=\"6\">"+"<img src='../images/info.png' title=\"Info\" height=\"10\" width=\"10\">" + temp[0] +"</td>");
 				fout.println("</tr>");
 				continue;
 			}
@@ -356,8 +360,13 @@ public class CustomizedReporter implements ITestListener, IReporter,
 				temp[5]="";
 			}
 			// this will create separate '<td>' for messages inside the action
+			fout.println("<td>" + temp[3] + "</td>");
 			for (String temp1 : temp) {
-				fout.println("<td>" + temp1 + "</td>");
+					if(temp1.contains("fail.jpg")||temp1.contains("pass.jpg")||temp1.contains("info.png"))
+					{
+						continue;
+					}
+					fout.println("<td>" + temp1 + "</td>");
 			}
 			// end up '<tr>' tag
 			fout.println("</tr>");
@@ -443,6 +452,11 @@ public class CustomizedReporter implements ITestListener, IReporter,
 			e.printStackTrace();
 		}
 		
+		//Getting Screen resolution
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = (int)screenSize.getWidth();
+		int height =(int) screenSize.getHeight();
+		
 		//Creating #3D pie chart using google javaScript api's
 		fout.println("<html>");
 		fout.println("<head>");
@@ -450,7 +464,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("#piechart_3d {");
 		fout.println(" position: absolute;");
 		fout.println(" top: 0px;");
-		fout.println(" right: 0Px;");
+		fout.println(" right: 500Px;");
 		fout.println("width: 0px;");
 		fout.println("height: 0px;");
 		fout.println("}");
@@ -466,7 +480,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
         fout.println("['Skiped ',"+totalSkippedMethods+"]");
         fout.println("]);");
         fout.println("var options = {");
-        fout.println("  title: 'Test Summary','width':550,'height':420,");
+        fout.println("  title: 'Test Summary','width':400,'height':250,");
         fout.println("is3D: true,};");
         fout.println("var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));");
         fout.println("chart.draw(data, options);");
@@ -547,6 +561,10 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("<tr>");
 		fout.println("<td align=\"justify\" class=\"report\"><b><i>Test Ended On</i></b></td>");
 		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+testEndedOn+"</i></b></td>");
+		fout.println("</tr>");
+		fout.println("<tr>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>Screen Resolution</i></b></td>");
+		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+width+"*"+height+"</i></b></td>");
 		fout.println("</tr>");
 		fout.println("</table>");
 		fout.println("</br>");
