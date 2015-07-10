@@ -241,7 +241,7 @@ public abstract class DataAccessBase extends TestBaseClass implements DatabaseRe
 		resultSet.beforeFirst();
 		int k = 0;
 		while (resultSet.next()) {
-			for (int j = 0; j < columnCount; j++) {
+			for (int j = 1; j < columnCount; j++) {
 				dataValues[k][j] = resultSet.getString(j);
 			}
 			k++;

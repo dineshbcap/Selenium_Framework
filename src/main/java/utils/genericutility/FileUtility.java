@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.poi.util.IOUtils;
+
 public class FileUtility {
 
 	/***
@@ -31,6 +33,8 @@ public class FileUtility {
 		}
 		in.close();
 		out.close();
+		IOUtils.closeQuietly(in);
+		IOUtils.closeQuietly(out);
 	}
 
 	/***

@@ -28,7 +28,8 @@ public class EnvironmentPropertiesReader {
 	
 	public EnvironmentPropertiesReader() {
 		try {
-			property.load(new FileInputStream(new java.io.File(".").getCanonicalPath() + filePath));
+			FileInputStream fileInputStream=new FileInputStream(new java.io.File(".").getCanonicalPath() + filePath);
+			property.load(fileInputStream);
 			this.setTransMgrUsername(property.getProperty("transmgrusername"));
 			this.setAccMgrUsername(property.getProperty("accountmgrusername"));
 			this.setPassword(property.getProperty("password"));
@@ -44,6 +45,7 @@ public class EnvironmentPropertiesReader {
 			this.setTestPlan(property.getProperty("testPlan"));
 			this.setTestSuiteID(property.getProperty("testSuiteID"));
 			this.setTestBuildId(property.getProperty("testBuildId"));
+			fileInputStream.close();
 
 		} catch (FileNotFoundException e) {
 			e.getMessage();
@@ -54,8 +56,9 @@ public class EnvironmentPropertiesReader {
 
 	public EnvironmentPropertiesReader(String fileName) {
 		try {
-			property.load(new FileInputStream(new java.io.File(".").getCanonicalPath() + jenkinsPath
-					+ File.separatorChar + fileName));
+			FileInputStream fileInputStream=new FileInputStream(new java.io.File(".").getCanonicalPath() + jenkinsPath
+					+ File.separatorChar + fileName);
+			property.load(fileInputStream);
 			this.setTransMgrUsername(property.getProperty("transmgrusername"));
 			this.setAccMgrUsername(property.getProperty("accountmgrusername"));
 			this.setPassword(property.getProperty("password"));
@@ -65,6 +68,7 @@ public class EnvironmentPropertiesReader {
 			this.setDBpassword(property.getProperty("DBpassword"));
 			this.setDBusername(property.getProperty("DBusername"));
 			this.setDbDriver(property.getProperty("DBdriver"));
+			fileInputStream.close();
 
 		} catch (FileNotFoundException e) {
 			e.getMessage();

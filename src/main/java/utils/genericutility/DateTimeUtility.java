@@ -1,8 +1,10 @@
 package utils.genericutility;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateTimeUtility {
@@ -91,10 +93,10 @@ public class DateTimeUtility {
 	 * @return date - in the above mentioned format
 	 */
 	public static String getYesterday() {
-		int MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
-		Date date = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		String yesterday = dateFormat.format(date.getTime() - (1 * MILLIS_IN_DAY));
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);    
+        String yesterday = dateFormat.format(cal.getTime());
 		return yesterday;
 	}
 
@@ -103,14 +105,15 @@ public class DateTimeUtility {
 	 * 
 	 * @param testDate
 	 * @return prevDate - in format MM/dd/yyyy
+	 * @throws ParseException 
 	 */
-	@SuppressWarnings("deprecation")
-	public static String getPrevday(String testDate) {
-		int MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
-		Date date = new Date(testDate);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		String yesterday = dateFormat.format(date.getTime() - (1 * MILLIS_IN_DAY));
-		return yesterday;
+	public static String getPrevday(String testDate) throws ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = dateFormat.parse(testDate);
+        Date oneDayBefore = new Date(date.getTime() - 2); 
+        String result = dateFormat.format(oneDayBefore);
+		return result;
+		
 	}
 
 	/***
@@ -118,14 +121,14 @@ public class DateTimeUtility {
 	 * 
 	 * @param testDate
 	 * @return nextDate - in format MM/dd/yyyy
+	 * @throws ParseException 
 	 */
-	@SuppressWarnings("deprecation")
-	public static String getNextday(String testDate) {
-		int MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
-		Date date = new Date(testDate);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		String yesterday = dateFormat.format(date.getTime() + (1 * MILLIS_IN_DAY));
-		return yesterday;
+	public static String getNextday(String testDate) throws ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = dateFormat.parse(testDate);
+        Date oneDayBefore = new Date(date.getTime() +1); 
+        String result = dateFormat.format(oneDayBefore);
+		return result;
 	}
 
 	/***

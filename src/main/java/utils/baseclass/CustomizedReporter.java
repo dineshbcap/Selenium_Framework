@@ -667,6 +667,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		
 	}
 	public void sendMail() {
+		String screenshotBasePath;
 		MimeBodyPart messageBodyPart = new MimeBodyPart();
 		Multipart multipart = new MimeMultipart();
 		// Get system properties
@@ -700,13 +701,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 
 	         // Set Subject: header field
 	         msg.setSubject("This is the Subject Line!");
-	         try {
-				TestBaseClass.screenshotBasePath = new File(".").getCanonicalPath();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	         File file= new File(TestBaseClass.screenshotBasePath + File.separator
+	        screenshotBasePath = new File(".").getCanonicalPath();
+			File file= new File(screenshotBasePath + File.separator
 						+ "custom-test-report"+File.separator+"index.html");
 	         // Now set the actual message
 	         DataSource source = new FileDataSource(file);
@@ -721,7 +717,10 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	         System.out.println("Sent message successfully....");
 	      }catch (MessagingException mex) {
 	         mex.printStackTrace();
-	      }
+	      }catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	public void generateIndexHtmlAreas(String status) {

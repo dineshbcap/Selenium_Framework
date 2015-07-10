@@ -79,7 +79,7 @@ public class TestBaseClass {
 	/**
 	 * Getting the base path of screen shot
 	 */
-	static String screenshotBasePath;
+	String screenshotBasePath;
 	@SuppressWarnings("unused")
 	private String logBasePath;
 	private String logFile;
