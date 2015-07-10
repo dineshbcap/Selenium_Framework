@@ -190,6 +190,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	 * @param out
 	 */
 	private void startHtmlPage(PrintWriter out, ITestResult result) {
+		if (Config.retryCount == 0) {
 		out.println("<html>");
 		out.println("<head>");
 		out.println("<meta content=\"text/html; charset=UTF-8\" http-equiv=\"content-type\"/><meta content=\"cache-control\" http-equiv=\"no-cache\"/><meta content=\"pragma\" http-equiv=\"no-cache\"/>");
@@ -247,22 +248,11 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		out.println("<title>Test results</title>");
 		out.println("</head>");
 		out.println("<body>");
-
-		if (Config.retryCount == 0) {
 			out.println("<b><i><u><h1>Test results </h1></u></i></b>");
 			out.println("<b><i><h2><u>Test Name: " + className + "."
 					+ result.getName() + "</u></h2></i></b>");
-		}
-
 		out.println("<table border=\"1\">");
 		out.println("<tbody>");
-
-		if (Config.retryCount > 0) {
-			out.println("<tr class=\"title\" title=\"\" alt=\"\">");
-			out.println("<td colspan=\"6\"> Retry Attempt: "
-					+ ((Config.retryCount)) + "</td>");
-			out.println("</tr>");
-		}
 		out.println("<br><br>");
 		out.println("<tr style='background-color: #B2ACAC;'>");
 		out.println("<td><b><i>Status</i></b></td>");
@@ -270,8 +260,16 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		out.println("<td><b><i>Parameter-1</i></b></td>");
 		out.println("<td><b><i>Parameter-2</i></b></td>");
 		out.println("<td><b><i>Calling-Class with Linenumber</i></b></td>");
-		out.println("<td><b><i>Screenshot</i></b></td>");
 		out.println("</tr>");
+		}
+		if (Config.retryCount > 0) {
+			out.println("<table border=\"1\">");
+			out.println("<tr class=\"title\" title=\"\" alt=\"\">");
+			fout.println("<td align=\"middle\"><img src='../images/info.png' title=\"Info\" height=\"20\" width=\"20\" ></td>");
+			out.println("<td style=\"color:red;\" colspan=\"5\"><b> Retry Attempt: "
+					+ ((Config.retryCount)) + "</b></td>");
+			out.println("</tr>");
+		}
 	}
 
 	/**
@@ -338,9 +336,9 @@ public class CustomizedReporter implements ITestListener, IReporter,
 						+ ".jpg";
 				// creating mapping for failed step(Link to screen shot and
 				// embed the screenshot in that step)
-				temp[5] = "<a href=\'" + pathToScreenshot + "\'> <img src=\'"
+				temp[4] = temp[4]+"<a href=\'" + pathToScreenshot + "\'> <center><img src=\'"
 						+ pathToScreenshot
-						+ "\' height=\"100\" width=\"100\"> </a>";
+						+ "\' height=\"100\" width=\"100\"> </center></a>";
 			}
 			// After split up, If the third array value contains 'title' means
 			// that is title
@@ -376,6 +374,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 					{
 						continue;
 					}
+					if(temp1==temp[5])
+						continue;
 					fout.println("<td>" + temp1 + "</td>");
 			}
 			// end up '<tr>' tag
@@ -579,7 +579,10 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("</table>");
 		fout.println("</br>");
 		fout.println("</br>");
-		
+		fout.println("</br>");
+		fout.println("</br>");
+		fout.println("</br>");
+		fout.println("</br>");
 		
 		fout.println("<table border=\"1\">");
 		fout.println("<tr style='background-color: ;'>");
