@@ -348,7 +348,6 @@ public class CustomizedReporter implements ITestListener, IReporter,
 				fout.println("<tr class=\"title\" title=\"\" alt=\"\">");
 				fout.println("<td align=\"middle\"><img src='../images/info.png' title=\"Info\" height=\"20\" width=\"20\" ></td>");
 				fout.println("<td colspan=\"5\">"+temp[0]+"</td>");
-				//fout.println("<td colspan=\"6\">"+"<img src='../images/info.png' title=\"Info\" height=\"10\" width=\"10\">" + temp[0] +"</td>");
 				String workingdirectory = System.getProperty("user.dir");
 				try {
 				    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(workingdirectory+"/temp.txt", true)));
@@ -692,13 +691,13 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	      properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
 	      properties.put("mail.smtp.starttls.enable", "true");
 	      properties.put("mail.smtp.auth", true);
-	      properties.put("mail.smtp.host", Config.mailSmtp);
+	      properties.put("mail.smtp.host", Config.MAILSMTP);
 	
 	      // Get the default Session object.
 	      Session session = Session.getInstance(properties,
 	              new javax.mail.Authenticator() {
 	                  protected PasswordAuthentication getPasswordAuthentication() {
-	                      return new PasswordAuthentication(Config.mailFrom,Config.mailPwd);
+	                      return new PasswordAuthentication(Config.MAILFROM,Config.MAILPWD);
 	                  }
 	              });
 		 try{
@@ -706,11 +705,11 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	         MimeMessage msg = new MimeMessage(session);
 
 	         // Set From: header field of the header.
-	         msg.setFrom(new InternetAddress(Config.mailFrom));
+	         msg.setFrom(new InternetAddress(Config.MAILFROM));
 
 	         // Set To: header field of the header.
 	         msg.addRecipient(Message.RecipientType.TO,
-	                                  new InternetAddress(Config.mailTo));
+	                                  new InternetAddress(Config.MAILTO));
 
 	         // Set Subject: header field
 	         msg.setSubject("This is the Subject Line!");

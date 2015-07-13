@@ -226,8 +226,7 @@ public class TestBaseClass {
 		case FIREFOX:
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			FirefoxProfile fireFoxProfile;
-			if(seleniumHost.contains("localhost")){
-				//File profilePath = new File("C:\\FireFoxProfiles"); 
+			if(seleniumHost.contains("localhost")){ 
 	            fireFoxProfile = new FirefoxProfile(); 
 	           	driver=new FirefoxDriver(fireFoxProfile);
 			}else{
@@ -334,7 +333,6 @@ public class TestBaseClass {
 		    	    } else {
 		    	      d = driver;
 		    	    }
-		    	    //File srcFile = ((TakesScreenshot)d).getScreenshotAs(OutputType.FILE);
 				File scrFile = ((TakesScreenshot)d).getScreenshotAs(OutputType.FILE);
 				FileUtility.copyFile(scrFile, new File(destFile));
 			}

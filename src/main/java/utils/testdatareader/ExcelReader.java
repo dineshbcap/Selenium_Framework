@@ -126,7 +126,6 @@ public class ExcelReader {
 		HSSFRow row = null;
 		HSSFCell cell = null;
 		ArrayList<HashedMap> data = new ArrayList<HashedMap>();
-//		Hashtable<String, Integer> excelHeaders = new Hashtable<String, Integer>();
 
 		try {
 
@@ -144,9 +143,6 @@ public class ExcelReader {
 			Hashtable<String, Integer> excelrRowColumnCount = new Hashtable<String, Integer>();
 			excelrRowColumnCount = findRowColumnCount(sheet,
 					excelrRowColumnCount);
-//			excelHeaders = readExcelHeaders(sheet, excelHeaders,
-//					excelrRowColumnCount);
-
 			// Get test data set
 			for (int r = 1; r < excelrRowColumnCount.get("RowCount"); r++) {
 				row = sheet.getRow(r);
@@ -204,10 +200,7 @@ public class ExcelReader {
 		Hashtable<String, Integer> excelrRowColumnCount = new Hashtable<String, Integer>();
 		excelrRowColumnCount = findRowColumnCount(sheet, excelrRowColumnCount);
 
-		// function call to find excel header fields
-//		Hashtable<String, Integer> excelHeaders = new Hashtable<String, Integer>();
-//		excelHeaders = readExcelHeaders(sheet, excelHeaders,
-//				excelrRowColumnCount);
+		// function call to find excel header field
 		HashedMap data = null;
 		ArrayList<String> header = new ArrayList<String>();
 		ArrayList<String> matcher = null;

@@ -71,7 +71,6 @@ augmentedDriver).getScreenshotAs(OutputType.FILE);
     	    } else {
     	      d = driver;
     	    }
-    	    //File srcFile = ((TakesScreenshot)d).getScreenshotAs(OutputType.FILE);
 		File scrFile = ((TakesScreenshot)d).getScreenshotAs(OutputType.FILE);
 		
 		String workingdirectory = System.getProperty("user.dir");

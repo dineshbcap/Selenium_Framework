@@ -240,7 +240,6 @@ public class TestLinkAPIHelper implements TestLinkAPIConst {
 
 	private static void addAllMatchingCases(TestLinkAPIClient apiClient, ArrayList<Map<String, Object>> cases, Integer projectID, Integer suiteID, String casePattern, String prefix, boolean useVisibleID) throws TestLinkAPIException {
 		TestLinkAPIResults results = apiClient.getCasesForTestSuite(projectID, suiteID);
-		// TestLinkAPIResults results = apiClient.getCasesForTestPlan(56964);
 		Object id = null;
 		for(int i = 0; i < results.size(); i++) {
 			Object externalID = results.getValueByName(i, API_RESULT_TC_ALT_EXTERNAL_ID);
