@@ -1,7 +1,5 @@
 package utils.baseclass;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -54,7 +52,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	private static Boolean flag = true;
 	private String OS = null;
 	private String arch = null;
-	private String browser = null;
+	private String JavaVersion=null;
 	private String testStartedOn=null;
 	private String testEndedOn=null;
 	/**
@@ -424,8 +422,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		
 		// get OS information, browser information, Execution Info 
         OS = System.getProperty("os.name");
-        browser= Config.browser;
         arch=System.getProperty("os.arch");
+        JavaVersion=System.getProperty("java.version") ;
         
 		// Overview report block
 		int totalPassedMethods = 0;
@@ -461,63 +459,381 @@ public class CustomizedReporter implements ITestListener, IReporter,
 			e.printStackTrace();
 		}
 		
-		//Getting Screen resolution
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = (int)screenSize.getWidth();
-		int height =(int) screenSize.getHeight();
-		
-		//Creating #3D pie chart using google javaScript api's
 		fout.println("<html>");
-		fout.println("<head>");
+		fout.println("<body>");
 		fout.println("<style>");
-		fout.println("#piechart_3d {");
-		fout.println(" position: absolute;");
-		fout.println(" top: 0px;");
-		fout.println(" right: 500Px;");
-		fout.println("width: 0px;");
-		fout.println("height: 0px;");
+		fout.println("#backgroundDiv {");
+		fout.println(" background-color: #F9F9F9;");
+		fout.println("top : 20px;");
+		fout.println("width: 200px;");
+		fout.println("height: 64%; ");
+		fout.println("width: 100%; ");
+		fout.println("margin: 15px auto");
+		fout.println("}");
+
+		fout.println("#HeaderDiv{");
+		fout.println(" width: 1200px;");
+		fout.println("height: 50px;");
+		fout.println(" line-height: 65Px;");
+		fout.println("}");
+
+		fout.println("#HeaderList{");
+		fout.println("list-style-type: none;");
+		fout.println("}");
+
+		fout.println(".boxFamily{");
+		fout.println("  text-align: center;"); 
+		fout.println(" font-family: 'Source Sans Pro',Calibri;  ");
+		fout.println(" font-size: 20px; ");
+		fout.println(" line-height: 40px;");
+		fout.println("}");
+
+		fout.println(".boxFamilySmall{");
+		fout.println("   text-align: center;");
+		fout.println("  font-size: 13px;");
+		fout.println("}");
+
+		fout.println("#HeaderList li{");
+		fout.println("margin-right: 70px;");
+		fout.println("float: right;");
+		fout.println(" padding-left: -10%;");
+		fout.println(" font-family: 'Source Sans Pro',Calibri;");
+		fout.println("  font-size: 18px;");
+		fout.println("}");
+
+		fout.println("#HeaderList li a{");
+		fout.println(" text-decoration: none;");
+		fout.println("}");
+
+		fout.println("#HeaderList li a:hover{");
 		fout.println("}");
 		fout.println("</style>");
-		fout.println("<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script><script type=\"text/javascript\">");
-		fout.println("google.load(\"visualization\",\"1\",{packages:[\"corechart\"]});");
-        fout.println("google.setOnLoadCallback(drawChart);");
-        fout.println("function drawChart() {");
-        fout.println("var data = google.visualization.arrayToDataTable([");
-        fout.println("['TestStatus', 'Count'],");
-        fout.println("['Passed ',"+totalPassedMethods+"],");
-        fout.println("['Failed ',"+totalFailedMethods +"],");
-        fout.println("['Skiped ',"+totalSkippedMethods+"]");
-        fout.println("]);");
-        fout.println("var options = {");
-        fout.println("  title: 'Test Summary','width':400,'height':250,");
-        fout.println("is3D: true,};");
-        fout.println("var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));");
-        fout.println("chart.draw(data, options);");
-        fout.println("}");
-        fout.println("</script>");
-        fout.println("</head>");
-        fout.println("<body>");
-        fout.println(" <div id=\"piechart_3d\" style=\"width: 400px; height: 200px;\"></div>");
-        fout.println("</body>");
-        fout.println(" </html>");
+		fout.println("<div id=\"HeaderDiv\">");
+		fout.println("<ul id=\"HeaderList\">");
+		fout.println("<li><a href=\"#\" id=\"dashBoard\" onclick=\"clickDashBoard()\">Dashboard</a></li>");
+		fout.println("</ul>");
+		fout.println("</div>");
+		fout.println("<div id=\"backgroundDiv\">");
+
+		fout.println("<html>");
+		fout.println("<body>");
+		fout.println("<style>");
+		fout.println("#InitialChart {");
+		fout.println("  position: absolute;");
+		fout.println("top: 70px;");
+		fout.println("right:790Px;");
+		fout.println("width: 0px;");
+		fout.println(" height: 0px;");
+		fout.println(" padding: 20px; ");
+		fout.println("}");
+		fout.println("</style>");
+
+		fout.println("<html>");
+		fout.println(" <head>");
+		fout.println(" <script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>");
+		fout.println(" <script type=\"text/javascript\">");
+		fout.println("   google.load(\"visualization\", \"1\", {packages:[\"corechart\"]});");
+		fout.println(" google.setOnLoadCallback(drawChart);");
+		fout.println("  function drawChart() {");
+		fout.println("   var data = google.visualization.arrayToDataTable([");
+		fout.println("     ['Test Sumamry', 'Test Case Count'],");
+		fout.println("     ['Passed',  "+  totalPassedMethods +"],");
+		fout.println("     ['Failed',   "+  totalFailedMethods +"],");
+		fout.println("     ['Skipped', "+  totalSkippedMethods  +"],");
+		fout.println(" ]);");
+		fout.println("  var options = {");
+		fout.println(" title: 'Test Summary','width':400,'height':400,");
+		fout.println(" pieSliceText: 'value',");
+		fout.println("pieHole: 0.4,");
+		fout.println(" };");
+	    fout.println(" var chart = new google.visualization.PieChart(document.getElementById('InitialChart'));");
+	    fout.println("chart.draw(data, options);");
+	    fout.println("}");
+	    fout.println("</script>");
+	    fout.println(" </head>");
+	    fout.println("<body>");
+		fout.println("  <div id=\"InitialChart\" style=\"width: 500px; height: 500px;\"></div>");
+		fout.println("</body>");
+		fout.println("</html>");
+
+		fout.println("<style>");
+		fout.println("#TotalCount {");
+		fout.println("  position: absolute;");
+		fout.println("top: 70px;");
+		fout.println(" right:580Px;");
+		fout.println(" padding: 20px; ");
+		fout.println(" }");
+		fout.println("</style>");
+		fout.println("<html>");
+		fout.println(" <head>");
+		fout.println("   <script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>");
+		fout.println("  <script type=\"text/javascript\">");
+		fout.println("    google.load(\"visualization\", \"1\", {packages:[\"corechart\"]});");
+		fout.println("   google.setOnLoadCallback(drawChart);");
+		fout.println("   function drawChart() {");
+		fout.println("     var data = google.visualization.arrayToDataTable([");
+		fout.println("      ['Total Test Methods', 'Total Test Methods'],");
+		fout.println("       ['Total',   "+ totalMethods   +"],");
+		fout.println(" ]);");
+		fout.println("var options = {");
+		fout.println("  title: 'Total Test Methods','width':200,'height':200,");
+		fout.println("  pieHole: 0.4,");
+		fout.println("  pieSliceText: 'value',");
+		fout.println("  pieSliceTextStyle: {");
+		fout.println("    color: 'black',");
+		fout.println("  },");
+		fout.println("  legend: 'none'");
+		fout.println(" };");
+		fout.println(" var chart = new google.visualization.PieChart(document.getElementById('TotalCount'));");
+		fout.println(" chart.draw(data, options);");
+		fout.println("  }");
+		fout.println("</script>");
+		fout.println(" </head>");
+		fout.println(" <body>");
+		fout.println("<div id=\"TotalCount\" style=\"width: 300px; height: 300px;\"></div>");
+		fout.println(" </body>");
+		fout.println("</html>");
+		fout.println("<style>");
+
+		fout.println("#PassCount {");
+		fout.println("position: absolute;");
+		fout.println(" top: 70px;");
+		fout.println("right:370Px;");
+		fout.println(" padding: 20px;");
+		fout.println(" }");
+		fout.println("</style>");
+
+		fout.println("<html>");
+		fout.println("  <head>");
+		fout.println("<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>");
+		fout.println("<script type=\"text/javascript\">");
+		fout.println("  google.load(\"visualization\", \"1\", {packages:[\"corechart\"]});");
+		fout.println("google.setOnLoadCallback(drawChart);");
+		fout.println("function drawChart() {");
+		fout.println("  var data = google.visualization.arrayToDataTable([");
+		fout.println("    ['Test Sumamry', 'Total Pass Methods'],");
+		fout.println("   ['Total',   "+ totalMethods   +"],");
+		fout.println("  ['Passed',  "+  totalPassedMethods  +"],");
+		fout.println(" ]);");
+		fout.println(" var options = {");
+		fout.println(" title: 'Total Pass Methods','width':200,'height':200,");
+		fout.println(" pieHole: 0.4,");
+		fout.println(" pieSliceTextStyle: {");
+		fout.println("color: 'black',");
+		fout.println(" },");
+		fout.println(" legend: 'none'");
+		fout.println("  };");
+		fout.println(" var chart = new google.visualization.PieChart(document.getElementById('PassCount'));");
+		fout.println("  chart.draw(data, options);");
+		fout.println(" }");
+		fout.println("</script>");
+		fout.println(" </head>");
+		fout.println("<body>");
+		fout.println("<div id=\"PassCount\" style=\"width: 300px; height: 300px;\"></div>");
+		fout.println(" </body>");
+		fout.println("</html>");
+
+		fout.println("<style>");
+		fout.println("#FailCount {");
+		fout.println(" position: absolute;");
+		fout.println("top: 70px;");
+		fout.println(" right:160Px;");
+		fout.println("padding: 20px; ");
+		fout.println(" }");
+		fout.println("</style>");
+
+		fout.println("<html>");
+		fout.println(" <head>");
+		fout.println("  <script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>");
+		fout.println("  <script type=\"text/javascript\">");
+		fout.println("   google.load(\"visualization\", \"1\", {packages:[\"corechart\"]});");
+		fout.println(" google.setOnLoadCallback(drawChart);");
+		fout.println(" function drawChart() {");
+		fout.println("  var data = google.visualization.arrayToDataTable([");
+		fout.println("    ['Test Sumamry', 'Total Fail Methods'],");
+		fout.println("   ['Total',   "+totalMethods    +"],");
+		fout.println("  ['Failed',  "+ totalFailedMethods   +"],");
+		fout.println(" ]);");
+		fout.println(" var options = {");
+		fout.println("   title: 'Total Fail Methods','width':200,'height':200,");
+		fout.println("   pieHole: 0.4,");
+		fout.println("  pieSliceTextStyle: {");
+		fout.println("     color: 'black',");
+		fout.println("   },");
+		fout.println("   legend: 'none'");
+		fout.println(" };");
+		fout.println("  var chart = new google.visualization.PieChart(document.getElementById('FailCount'));");
+		fout.println(" chart.draw(data, options);");
+		fout.println("}");
+		fout.println(" </script>");
+		fout.println(" </head>");
+		fout.println("<body>");
+		fout.println("<div id=\"FailCount\" style=\"width: 300px; height: 300px;\"></div>");
+		fout.println("</body>");
+		fout.println("</html>");
+
+		fout.println("<style>");
+		fout.println("#SkipCount {");
+		fout.println(" position: absolute;");
+		fout.println("top: 70px;");
+		fout.println("right:-50Px;");
+		fout.println(" padding: 20px; ");
+		fout.println(" }");
+		fout.println("</style>");
+
+		fout.println("<html>");
+		fout.println(" <head>");
+		fout.println(" <script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>");
+		fout.println(" <script type=\"text/javascript\">");
+		fout.println("  google.load(\"visualization\", \"1\", {packages:[\"corechart\"]});");
+		fout.println("  google.setOnLoadCallback(drawChart);");
+		fout.println("  function drawChart() {");
+		fout.println("    var data = google.visualization.arrayToDataTable([");
+		fout.println("     ['Test Sumamry', 'Total Skip Methods'],");
+		fout.println("     ['Total',   "+ totalMethods   +"],");
+		fout.println("	  ['Skipped',  "+  totalSkippedMethods  +"],");
+		fout.println("   ]);");
+		fout.println("   var options = {");
+		fout.println("     title: 'Total Skip Methods','width':200,'height':200,");
+		fout.println("  pieHole: 0.4,");
+		fout.println(" pieSliceTextStyle: {");
+		fout.println(" color: 'black',");
+		fout.println(" },");
+		fout.println("legend: 'none'");
+		fout.println(" };");
+		fout.println("var chart = new google.visualization.PieChart(document.getElementById('SkipCount'));");
+		fout.println(" chart.draw(data, options);");
+		fout.println("}");
+		fout.println("</script>");
+		fout.println(" </head>");
+		fout.println(" <body>");
+		fout.println("  <div id=\"SkipCount\" style=\"width: 300px; height: 300px;\">");
+		fout.println("</div>");
+		fout.println(" </body>");
+		fout.println("</html>");
+
+		fout.println("<style>");
+		fout.println(".boxWidth{");
+		fout.println(" position: absolute;");
+		fout.println(" width: 230px; ");
+		fout.println(" height: 50px; ");
+		fout.println(" background-color:#F9F9F9; ");
+		fout.println(" text-align: center;");
+		fout.println("}");
+		fout.println("</style>");
+
+		fout.println("<style>");
+		fout.println("#OS {");
+		fout.println(" position: absolute;");
+		fout.println(" top: 300px;");
+		fout.println(" right:630Px;");
+		fout.println("padding: 20px;");
+		fout.println(" border: 1px solid #B4BFC3; ");
+	    fout.println(" }");
+	    fout.println("</style>");
+	    fout.println("<div id=\"OS\" class=\"boxWidth\">");
+	    fout.println("<span class=\"boxFamily\">"+ OS  +"</span>");
+	    fout.println("<br>");
+	    fout.println("<span style=\"text-align: center;font-size: 13px;\">OS</span>");
+	    fout.println("</div>");
+	    
+	    fout.println("<style>");
+	    fout.println("#osArch {");
+	    fout.println("  position: absolute;");
+	    fout.println(" top: 300px;");
+	    fout.println(" right:350Px;");
+	    fout.println(" padding: 20px;");
+	    fout.println(" border: 1px solid #B4BFC3; ");
+	    fout.println(" }");
+	    fout.println("</style>");
+	    fout.println("<div id=\"osArch\" class=\"boxWidth\">");
+	    fout.println("<span class=\"boxFamily\">"+ arch +"</span>");
+	    fout.println("<br>");
+	    fout.println("<span style=\"text-align: center;font-size: 13px;\">OS Arch</span>");
+	    fout.println("</div>");
+
+	    fout.println("<style>");
+	    fout.println("#JavaVersion {");
+	    fout.println(" position: absolute;");
+	    fout.println(" top: 300px;");
+	    fout.println(" right:70px;");
+	    fout.println(" padding: 20px; ");
+	    fout.println(" border: 1px solid #B4BFC3;");
+	    fout.println("}");
+	    fout.println("</style>");
+	    fout.println("<div id=\"JavaVersion\" class=\"boxWidth\">");
+		fout.println("<span class=\"boxFamily\">"+ JavaVersion +"</span>");
+		fout.println("<br>");
+		fout.println("<span class=\"boxFamilySmall\">Java Ver.</span>");
+		fout.println("</div>");
+
+		fout.println("<style>");
+		fout.println("#Address {");
+		fout.println(" position: absolute;");
+		fout.println(" top: 400px;");
+		fout.println(" right:630Px;");
+		fout.println(" padding: 20px; ");
+		fout.println(" border: 1px solid #B4BFC3;");
+		fout.println(" }	");
+		fout.println("</style>");
+		fout.println("<div id=\"Address\" class=\"boxWidth\">");
+		fout.println("<span class=\"boxFamily\">"+ Config.url +"</span>");
+		fout.println("<br>");
+		fout.println("<span class=\"boxFamilySmall\">URL</span>");
+		fout.println("</div>");
+
+		fout.println("<style>");
+		fout.println("#TestStartedOn {");
+		fout.println(" position: absolute;");
+		fout.println(" top: 400px;");
+		fout.println(" right:350Px;");
+		fout.println(" padding: 20px; ");
+		fout.println(" border: 1px solid #B4BFC3;");
+		fout.println(" }");
+		fout.println("</style>");
+		fout.println("<div id=\"TestStartedOn\" class=\"boxWidth\">");
+		fout.println("<span class=\"boxFamily\">"+ testStartedOn +"</span>");
+		fout.println("<br>");
+		fout.println("<span class=\"boxFamilySmall\">TestStartedOn</span>");
+		fout.println("</div>");
+
+		fout.println("<style>");
+		fout.println("#TestEndedOn{");
+		fout.println(" position: absolute;");
+		fout.println(" top: 400px;");
+		fout.println(" right:70Px;");
+		fout.println(" padding: 20px;");
+		fout.println(" border: 1px solid #B4BFC3; ");
+		fout.println(" }");
+		fout.println("</style>");
+		fout.println("<div id=\"TestEndedOn\" class=\"boxWidth\">");
+		fout.println("<span class=\"boxFamily\">"+ testEndedOn +"</span>");
+		fout.println("<br>");
+		fout.println("<span class=\"boxFamilySmall\">TestEndedOn</span>");
+		fout.println("</div>");
+		fout.println("</div>");
+		fout.println("<br>");
+		fout.println("<br>");
+		fout.println("</body>");
+		fout.println("</html>");
+
 		
         
 		// Write initial html codes neccessary for report
 		fout.println("<html>");
-		fout.println("<head>");
-		fout.println("<title>Test results</title>");
+		fout.println("<body>");
 		fout.println("<style type=\"text/css\">");
+		fout.println("<br>");
+		fout.println("<br>");
 		fout.println("body, table {");
 		fout.println("font-family: Verdana, Arial, sans-serif;");
 		fout.println("font-size: 12;");
 		fout.println("}");
-
 		fout.println("table {");
 		fout.println("border-collapse: collapse;");
 		fout.println("border: 1px solid #ccc;");
 		fout.println("table-layout: fixed;");
 		fout.println("}");
-
 		fout.println("th, td {");
 		fout.println("padding-left: 0.3em;");
 		fout.println("padding-right: 0.3em;");
@@ -525,7 +841,6 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("overflow: hidden;");
 		fout.println("width: 400px;");
 		fout.println("}");
-
 		fout.println(".result {");
 		fout.println("padding-left: 0.3em;");
 		fout.println("padding-right: 0.3em;");
@@ -533,7 +848,6 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("overflow: hidden;");
 		fout.println("width: 100px;");
 		fout.println("}");
-
 		fout.println(".report {");
 		fout.println("padding-left: 0.3em;");
 		fout.println("padding-right: 0.3em;");
@@ -541,85 +855,23 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("overflow: hidden;");
 		fout.println("width: 200px;");
 		fout.println("}");
-
 		fout.println("</style>");
-		fout.println("</head>");
-		fout.println("<body>");
-		fout.println("<b><i><u><h1>Test results </h1></u></i></b>");
+		fout.println("<br>");
+		fout.println("<br>");
+		fout.println("<br>");
+		fout.println("<br>");
+		fout.println("Choose a filter:");
+		fout.println("<select align=\"center\" id=\"dropDown\" onchange=\"changeDropDown()\">");
+		fout.println("<option selected value=\"All\">All</option>");
+		fout.println("<option value=\"Passed\">Passed</option>");
+		fout.println("<option value=\"Failed\">Failed</option>");
+		fout.println("<option value=\"Skipped\">Skipped</option>");
+		fout.println("</select>");
+		fout.println("<br>");
+		fout.println("<br>");
+	    fout.println("<br>");
 
-		fout.println("<table border=\"1\">");
-		fout.println("<tr style='background-color:#F5F5F5;'>");
-		fout.println("<td align=\"center\" colspan=\"2\"><b>System Information</b></td>");
-		fout.println("</tr>");
-		fout.println("<tr>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>Operating System</i></b></td>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+OS+"</i></b></td>");
-		fout.println("</tr>");
-		fout.println("<tr>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>System Architecture</i></b></td>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+arch+"</i></b></td>");
-		fout.println("</tr>");
-		fout.println("<tr>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>Browser</i></b></td>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+browser+"</i></b></td>");
-		fout.println("</tr>");
-		fout.println("<tr>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>Test Started On</i></b></td>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+testStartedOn+"</i></b></td>");
-		fout.println("</tr>");
-		fout.println("<tr>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>Test Ended On</i></b></td>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+testEndedOn+"</i></b></td>");
-		fout.println("</tr>");
-		fout.println("<tr>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>Screen Resolution</i></b></td>");
-		fout.println("<td align=\"justify\" class=\"report\"><b><i>"+width+"*"+height+"</i></b></td>");
-		fout.println("</tr>");
-		fout.println("</table>");
-		fout.println("</br>");
-		fout.println("</br>");
-		fout.println("</br>");
-		fout.println("</br>");
-		fout.println("</br>");
-		fout.println("</br>");
-		
-		fout.println("<table border=\"1\">");
-		fout.println("<tr style='background-color: ;'>");
-		fout.println("<td  style='background-color: #F5F5F5;' align=\"center\" colspan=\"4\"><b>Report Overview</b></td>");
-		fout.println("</tr>");
-		fout.println("<tr>");
-		fout.println("<td align=\"center\" class=\"report\"><b><i>Total Test Methods</i></b></td>");
-		fout.println("<td align=\"center\" class=\"report\"><b><i>Passed Test Methods</i></b></td>");
-		fout.println("<td align=\"center\" class=\"report\"><b><i>Failed Test Methods</i></b></td>");
-		fout.println("<td align=\"center\" class=\"report\"><b><i>Skipped Test Methods</i></b></td>");
-		fout.println("</tr>");
-		fout.println("<tr>");
-		fout.println("<td align=\"center\" class=\"report\"><b><i>"
-				+ totalMethods + "</i></b></td>");
-		fout.println("<td align=\"center\" class=\"report\"><b><i>"
-				+ totalPassedMethods + "</i></b></td>");
-		fout.println("<td align=\"center\" class=\"report\"><b><i>"
-				+ totalFailedMethods + "</i></b></td>");
-		fout.println("<td align=\"center\" class=\"report\"><b><i>"
-				+ totalSkippedMethods + "</i></b></td>");
-		fout.println("</tr>");
-		fout.println("</table>");
-		fout.println("<br>");
-		fout.println("<br>");
-	
-		fout.println("<br>");
-		fout.println("Choose to filter your results:");
-	    fout.println("<select align=\"center\" id=\"dropDown\" onchange=\"changeDropDown()\">");
-	    fout.println("<option value=\"All\">All</option>");
-	    fout.println("<option value=\"Passed\">Passed</option>");
-	    fout.println("<option value=\"Failed\">Failed</option>");
-	    fout.println("<option value=\"Skipped\">Skipped</option>");
-	    fout.println("</select>");
-	    fout.println("<br>");
-	    fout.println("<br>");
 	    
-	    fout.println("<br>");
-	    fout.println("<br>");
 	    fout.println("<script type=\"text/javascript\">");
 	    fout.println("function changeDropDown(){");
 	    fout.println("var tabToDisplay=document.getElementById(\"dropDown\").value;");
@@ -773,32 +1025,31 @@ public class CustomizedReporter implements ITestListener, IReporter,
 							if (flag) {
 								if (status.equalsIgnoreCase(PASSED)) {
 									// Passed
-									fout.println("<table id=\"passTable\" border=\"1\">");
+									fout.println("<table id=\"passTable\" style=\"font-family: \'Source Sans Pro\',Calibri;  font-size: 18px; border: 2px solid #B4BFC3;\" bgcolor=\"#F9F9F9\">");
 									fout.println("<tbody>");
-									fout.println("<tr style='background-color: #ccffcc;'>");
-									fout.println("<td align=\"center\" colspan=\"3\"><b> Passed cases</b> </td>");
+									fout.println("<tr bgcolor=\"#F9F9F9\" style=\"font-family: 'Source Sans Pro',Calibri;  font-size: 18px; border: 2px solid #B4BFC3\";>");
+									fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\" colspan=\"3\"><b> Passed cases</b> </td>");
 									fout.println("</tr>");
 								} else if (status.equalsIgnoreCase(FAILED)) {
 									// Failed
-									fout.println("<table id=\"failTable\" border=\"1\">");
+									fout.println("<table id=\"failTable\" style=\"font-family: \'Source Sans Pro\',Calibri;  font-size: 18px; border: 2px solid #B4BFC3;\" bgcolor=\"#F9F9F9\">");
 									fout.println("<tbody>");
-									fout.println("<tr style='background-color: #ffcccc;'>");
-									fout.println("<td align=\"center\" colspan=\"3\"> <b>Failed cases</b> </td>");
+									fout.println("<tr bgcolor=\"#F9F9F9\" style=\"font-family: 'Source Sans Pro',Calibri;  font-size: 18px; border: 2px solid #B4BFC3\";>");
+									fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\" colspan=\"3\"> <b>Failed cases</b> </td>");
 									fout.println("</tr>");
 								} else {
 									// Skipped
-									fout.println("<table id=\"skipTable\" border=\"1\">");
+									fout.println("<table id=\"skipTable\" style=\"font-family: \'Source Sans Pro\',Calibri;  font-size: 18px; border: 2px solid #B4BFC3;\" bgcolor=\"#F9F9F9\">");
 									fout.println("<tbody>");
-									fout.println("<tr style='background-color: #B2ACAC;'>");
-									fout.println("<td align=\"center\" colspan=\"3\">"
-											+ "<b>Skipped cases</b>" + "</td>");
+									fout.println("<tr bgcolor=\"#F9F9F9\" style=\"font-family: 'Source Sans Pro',Calibri;  font-size: 18px; border: 2px solid #B4BFC3\";>");
+									fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\" colspan=\"3\">"+ "<b>Skipped cases</b>" + "</td>");
 									fout.println("</tr>");
 								}
 
-								fout.println("<tr style='background-color: #F5F5F5;'>");
-								fout.println("<td><b><i>Package Name</i></b></td>");
-								fout.println("<td><b><i>Class Name With Test Name</i></b></td>");
-								fout.println("<td align=\"center\" class=\"result\"><b><i>Result</i></b></td>");
+								fout.println("<tr bgcolor=\"#F9F9F9\" style=\"font-family: 'Source Sans Pro',Calibri;  font-size: 18px; border: 2px solid #B4BFC3;\">");
+								fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\"><b><i>Package Name</i></b></td>");
+								fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\"><b><i>Class Name With Test Name</i></b></td>");
+								fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\" class=\"result\"><b><i>Result</i></b></td>");
 								fout.println("</tr>");
 								flag = false;
 							}
@@ -815,18 +1066,18 @@ public class CustomizedReporter implements ITestListener, IReporter,
 									+ testName + "'>"
 									+ splitClassName[length - 1] + "."
 									+ temptestName + "</a>";
-							fout.println("<td>" + temp + "</td>");
+							fout.println("<td style=\"border: 2px solid #B4BFC3;\">" + temp + "</td>");
 							if (status.equalsIgnoreCase(PASSED)) {
 								// Passed
-								fout.println("<td align=\"center\" class='result'><img src='images/Tick_Mark.png' height=\"20\" width=\"20\">"
+								fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\" class='result'><img src='images/Tick_Mark.png' height=\"20\" width=\"20\">"
 										+ "</td>");
 							} else if (status.equalsIgnoreCase(FAILED)) {
 								// Failed
-								fout.println("<td align=\"center\" class='result'><img src='images/Fail_Mark.jpg' height=\"20\" width=\"20\">"
+								fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\" class='result'><img src='images/Fail_Mark.jpg' height=\"20\" width=\"20\">"
 										+ "</td>");
 							} else {
 								// Skipped
-								fout.println("<td align=\"center\" class='result'>"
+								fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\" class='result'>"
 										+ SKIPPED + "</td>");
 							}
 							fout.println("</tr>");
