@@ -49,7 +49,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	private static final String PASSED = "_Passed";
 	private static final String FAILED = "_Failed";
 	private static final String SKIPPED = "_Skipped";
-	private static Boolean flag = true;
+	private Boolean flag = true;
 	private String OS = null;
 	private String arch = null;
 	private String JavaVersion=null;
@@ -459,20 +459,43 @@ public class CustomizedReporter implements ITestListener, IReporter,
 			e.printStackTrace();
 		}
 		
+		fout.println("<!DOCTYPE html>");
 		fout.println("<html>");
-		fout.println("<body>");
+		fout.println("<body onload=\"trim()\" style=\"border: 1px solid #000000;\">");
+		
+		fout.println("<script>");
+		fout.println("function trim()");
+		fout.println("{");
+		fout.println("var final=document.getElementById(\"AddressSpan1\").innerHTML;");
+		fout.println("if(final.length>20)");
+		fout.println("{");
+		fout.println("document.getElementById(\"AddressSpan1\").title = final;");
+		fout.println(" document.getElementById(\"AddressSpan1\").innerHTML=\"\";");
+		fout.println(" for(var i = 0; i < 17; i++)");
+		fout.println(" {");
+		fout.println(" document.getElementById(\"AddressSpan1\").innerHTML= document.getElementById(\"AddressSpan1\").innerHTML+final[i];");
+		fout.println("}");
+		fout.println("for(i=17;i<=19;i++)");
+		fout.println(" {");
+		fout.println("document.getElementById(\"AddressSpan1\").innerHTML= document.getElementById(\"AddressSpan1\").innerHTML+'.';");
+		fout.println("}");
+		fout.println("}");
+		fout.println("}");
+	    fout.println("</script>");
+		
+		
 		fout.println("<style>");
 		fout.println("#backgroundDiv {");
 		fout.println(" background-color: #F9F9F9;");
 		fout.println("top : 20px;");
 		fout.println("width: 200px;");
-		fout.println("height: 64%; ");
-		fout.println("width: 100%; ");
+		fout.println("height: 400px; ");
+		fout.println("width: 1200px; ");
 		fout.println("margin: 15px auto");
 		fout.println("}");
 
 		fout.println("#HeaderDiv{");
-		fout.println(" width: 1200px;");
+		fout.println("background-color: #F9F9F9;");
 		fout.println("height: 50px;");
 		fout.println(" line-height: 65Px;");
 		fout.println("}");
@@ -485,43 +508,28 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("  text-align: center;"); 
 		fout.println(" font-family: 'Source Sans Pro',Calibri;  ");
 		fout.println(" font-size: 20px; ");
-		fout.println(" line-height: 40px;");
+		fout.println(" line-height: 30px;");
 		fout.println("}");
 
 		fout.println(".boxFamilySmall{");
 		fout.println("   text-align: center;");
 		fout.println("  font-size: 13px;");
 		fout.println("}");
-
-		fout.println("#HeaderList li{");
-		fout.println("margin-right: 70px;");
-		fout.println("float: right;");
-		fout.println(" padding-left: -10%;");
-		fout.println(" font-family: 'Source Sans Pro',Calibri;");
-		fout.println("  font-size: 18px;");
-		fout.println("}");
-
-		fout.println("#HeaderList li a{");
-		fout.println(" text-decoration: none;");
-		fout.println("}");
-
-		fout.println("#HeaderList li a:hover{");
-		fout.println("}");
 		fout.println("</style>");
-		fout.println("<div id=\"HeaderDiv\">");
-		fout.println("<ul id=\"HeaderList\">");
-		fout.println("<li><a href=\"#\" id=\"dashBoard\" onclick=\"clickDashBoard()\">Dashboard</a></li>");
-		fout.println("</ul>");
+		
+		fout.println("</style>");
+		fout.println("<div id=\"HeaderDiv\" align=center>");
+		fout.println("<center style=\"font-family: 'Source Sans Pro',Calibri; color: #3232FF; font-size: 26px;\"><b>Test Summary Report</b></center>");
 		fout.println("</div>");
-		fout.println("<div id=\"backgroundDiv\">");
+		fout.println("<div align=center id=\"backgroundDiv\">");
 
 		fout.println("<html>");
 		fout.println("<body>");
 		fout.println("<style>");
 		fout.println("#InitialChart {");
 		fout.println("  position: absolute;");
-		fout.println("top: 70px;");
-		fout.println("right:790Px;");
+		fout.println("top: 65px;");
+		fout.println("right:925Px;");
 		fout.println("width: 0px;");
 		fout.println(" height: 0px;");
 		fout.println(" padding: 20px; ");
@@ -542,7 +550,10 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("     ['Skipped', "+  totalSkippedMethods  +"],");
 		fout.println(" ]);");
 		fout.println("  var options = {");
-		fout.println(" title: 'Test Summary','width':400,'height':400,");
+		fout.println(" title: 'Test Summary','width':380,'height':380,");
+		fout.println("colors:['#AADD00','#EE0000','#FFFF7E'],");
+		fout.println("'chartArea': {'width': '70%', 'height': '60%'},");
+		fout.println("legend:{position:'bottom'},");
 		fout.println(" pieSliceText: 'value',");
 		fout.println("pieHole: 0.4,");
 		fout.println(" };");
@@ -552,15 +563,15 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	    fout.println("</script>");
 	    fout.println(" </head>");
 	    fout.println("<body>");
-		fout.println("  <div id=\"InitialChart\" style=\"width: 500px; height: 500px;\"></div>");
+		fout.println("  <div id=\"InitialChart\" style=\"width: 320px; height: 320px; position: absolute; \"></div>");
 		fout.println("</body>");
 		fout.println("</html>");
 
 		fout.println("<style>");
 		fout.println("#TotalCount {");
 		fout.println("  position: absolute;");
-		fout.println("top: 70px;");
-		fout.println(" right:580Px;");
+		fout.println("top: 65px;");
+		fout.println(" right:695Px;");
 		fout.println(" padding: 20px; ");
 		fout.println(" }");
 		fout.println("</style>");
@@ -576,7 +587,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("       ['Total',   "+ totalMethods   +"],");
 		fout.println(" ]);");
 		fout.println("var options = {");
-		fout.println("  title: 'Total Test Methods','width':200,'height':200,");
+		fout.println("  title: 'Total Test Methods','width':190,'height':190,");
+		fout.println("colors:['#00B2EE'],");
 		fout.println("  pieHole: 0.4,");
 		fout.println("  pieSliceText: 'value',");
 		fout.println("  pieSliceTextStyle: {");
@@ -590,15 +602,15 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("</script>");
 		fout.println(" </head>");
 		fout.println(" <body>");
-		fout.println("<div id=\"TotalCount\" style=\"width: 300px; height: 300px;\"></div>");
+		fout.println("<div id=\"TotalCount\" style=\"width: 160px; height: 160px;\"></div>");
 		fout.println(" </body>");
 		fout.println("</html>");
 		fout.println("<style>");
 
 		fout.println("#PassCount {");
 		fout.println("position: absolute;");
-		fout.println(" top: 70px;");
-		fout.println("right:370Px;");
+		fout.println(" top: 65px;");
+		fout.println("right:495Px;");
 		fout.println(" padding: 20px;");
 		fout.println(" }");
 		fout.println("</style>");
@@ -616,7 +628,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("  ['Passed',  "+  totalPassedMethods  +"],");
 		fout.println(" ]);");
 		fout.println(" var options = {");
-		fout.println(" title: 'Total Pass Methods','width':200,'height':200,");
+		fout.println(" title: 'Total Pass Methods','width':190,'height':190,");
+		fout.println("colors:['#00B2EE','#AADD00'],");
 		fout.println(" pieHole: 0.4,");
 		fout.println(" pieSliceTextStyle: {");
 		fout.println("color: 'black',");
@@ -629,15 +642,15 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("</script>");
 		fout.println(" </head>");
 		fout.println("<body>");
-		fout.println("<div id=\"PassCount\" style=\"width: 300px; height: 300px;\"></div>");
+		fout.println("<div id=\"PassCount\" style=\"width: 160px; height: 160px;\"></div>");
 		fout.println(" </body>");
 		fout.println("</html>");
 
 		fout.println("<style>");
 		fout.println("#FailCount {");
 		fout.println(" position: absolute;");
-		fout.println("top: 70px;");
-		fout.println(" right:160Px;");
+		fout.println("top: 65px;");
+		fout.println(" right:295Px;");
 		fout.println("padding: 20px; ");
 		fout.println(" }");
 		fout.println("</style>");
@@ -655,7 +668,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("  ['Failed',  "+ totalFailedMethods   +"],");
 		fout.println(" ]);");
 		fout.println(" var options = {");
-		fout.println("   title: 'Total Fail Methods','width':200,'height':200,");
+		fout.println("   title: 'Total Fail Methods','width':190,'height':190,");
+		fout.println("colors:['#00B2EE','#EE0000'],");
 		fout.println("   pieHole: 0.4,");
 		fout.println("  pieSliceTextStyle: {");
 		fout.println("     color: 'black',");
@@ -668,15 +682,15 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println(" </script>");
 		fout.println(" </head>");
 		fout.println("<body>");
-		fout.println("<div id=\"FailCount\" style=\"width: 300px; height: 300px;\"></div>");
+		fout.println("<div id=\"FailCount\" style=\"width: 160px; height: 160px;\"></div>");
 		fout.println("</body>");
 		fout.println("</html>");
 
 		fout.println("<style>");
 		fout.println("#SkipCount {");
 		fout.println(" position: absolute;");
-		fout.println("top: 70px;");
-		fout.println("right:-50Px;");
+		fout.println("top: 65px;");
+		fout.println("right:95Px;");
 		fout.println(" padding: 20px; ");
 		fout.println(" }");
 		fout.println("</style>");
@@ -694,8 +708,9 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("	  ['Skipped',  "+  totalSkippedMethods  +"],");
 		fout.println("   ]);");
 		fout.println("   var options = {");
-		fout.println("     title: 'Total Skip Methods','width':200,'height':200,");
+		fout.println("     title: 'Total Skip Methods','width':190,'height':190,");
 		fout.println("  pieHole: 0.4,");
+		fout.println("colors:['#00B2EE','#FFFF7E'],");
 		fout.println(" pieSliceTextStyle: {");
 		fout.println(" color: 'black',");
 		fout.println(" },");
@@ -707,7 +722,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("</script>");
 		fout.println(" </head>");
 		fout.println(" <body>");
-		fout.println("  <div id=\"SkipCount\" style=\"width: 300px; height: 300px;\">");
+		fout.println("  <div id=\"SkipCount\" style=\"width: 160px; height: 160px;\">");
 		fout.println("</div>");
 		fout.println(" </body>");
 		fout.println("</html>");
@@ -715,8 +730,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("<style>");
 		fout.println(".boxWidth{");
 		fout.println(" position: absolute;");
-		fout.println(" width: 230px; ");
-		fout.println(" height: 50px; ");
+		fout.println(" width: 217px; ");
+		fout.println(" height: 45px; ");
 		fout.println(" background-color:#F9F9F9; ");
 		fout.println(" text-align: center;");
 		fout.println("}");
@@ -725,8 +740,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("<style>");
 		fout.println("#OS {");
 		fout.println(" position: absolute;");
-		fout.println(" top: 300px;");
-		fout.println(" right:630Px;");
+		fout.println(" top: 285px;");
+		fout.println(" right:615Px;");
 		fout.println("padding: 20px;");
 		fout.println(" border: 1px solid #B4BFC3; ");
 	    fout.println(" }");
@@ -740,7 +755,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	    fout.println("<style>");
 	    fout.println("#osArch {");
 	    fout.println("  position: absolute;");
-	    fout.println(" top: 300px;");
+	    fout.println(" top: 285px;");
 	    fout.println(" right:350Px;");
 	    fout.println(" padding: 20px;");
 	    fout.println(" border: 1px solid #B4BFC3; ");
@@ -755,8 +770,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	    fout.println("<style>");
 	    fout.println("#JavaVersion {");
 	    fout.println(" position: absolute;");
-	    fout.println(" top: 300px;");
-	    fout.println(" right:70px;");
+	    fout.println(" top: 285px;");
+	    fout.println(" right:85px;");
 	    fout.println(" padding: 20px; ");
 	    fout.println(" border: 1px solid #B4BFC3;");
 	    fout.println("}");
@@ -770,14 +785,14 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("<style>");
 		fout.println("#Address {");
 		fout.println(" position: absolute;");
-		fout.println(" top: 400px;");
-		fout.println(" right:630Px;");
+		fout.println(" top: 380px;");
+		fout.println(" right:615Px;");
 		fout.println(" padding: 20px; ");
 		fout.println(" border: 1px solid #B4BFC3;");
 		fout.println(" }	");
 		fout.println("</style>");
 		fout.println("<div id=\"Address\" class=\"boxWidth\">");
-		fout.println("<span class=\"boxFamily\">"+ Config.url +"</span>");
+		fout.println("<span id=\"AddressSpan1\" class=\"boxFamily\">"+ Config.url +"</span>");
 		fout.println("<br>");
 		fout.println("<span class=\"boxFamilySmall\">URL</span>");
 		fout.println("</div>");
@@ -785,7 +800,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("<style>");
 		fout.println("#TestStartedOn {");
 		fout.println(" position: absolute;");
-		fout.println(" top: 400px;");
+		fout.println(" top: 380px;");
 		fout.println(" right:350Px;");
 		fout.println(" padding: 20px; ");
 		fout.println(" border: 1px solid #B4BFC3;");
@@ -800,8 +815,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("<style>");
 		fout.println("#TestEndedOn{");
 		fout.println(" position: absolute;");
-		fout.println(" top: 400px;");
-		fout.println(" right:70Px;");
+		fout.println(" top: 380px;");
+		fout.println(" right:85Px;");
 		fout.println(" padding: 20px;");
 		fout.println(" border: 1px solid #B4BFC3; ");
 		fout.println(" }");
@@ -856,12 +871,9 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println("width: 200px;");
 		fout.println("}");
 		fout.println("</style>");
-		fout.println("<br>");
-		fout.println("<br>");
-		fout.println("<br>");
-		fout.println("<br>");
-		fout.println("Choose a filter:");
-		fout.println("<select align=\"center\" id=\"dropDown\" onchange=\"changeDropDown()\">");
+		
+		fout.println("<center  style=\"font-family: 'Source Sans Pro',Calibri; color: #3232FF;\"><b>Choose a filter:</b></center>");
+		fout.println("<select style=\"margin-left:47%;\"  align=\"center\" id=\"dropDown\" onchange=\"changeDropDown()\">");
 		fout.println("<option selected value=\"All\">All</option>");
 		fout.println("<option value=\"Passed\">Passed</option>");
 		fout.println("<option value=\"Failed\">Failed</option>");
@@ -922,7 +934,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		// used for create end html tags
 		fout.println("</tbody>");
 		fout.println("<br>");
-		fout.println("<p id=\"updateValue\"></p>");
+		fout.println("<p align=center id=\"updateValue\"></p>");
 		fout.println("</body></html>");
 		// used for write every thing in html file
 		fout.flush();
@@ -1025,21 +1037,21 @@ public class CustomizedReporter implements ITestListener, IReporter,
 							if (flag) {
 								if (status.equalsIgnoreCase(PASSED)) {
 									// Passed
-									fout.println("<table id=\"passTable\" style=\"font-family: \'Source Sans Pro\',Calibri;  font-size: 18px; border: 2px solid #B4BFC3;\" bgcolor=\"#F9F9F9\">");
+									fout.println("<table align=center id=\"passTable\" style=\"font-family: \'Source Sans Pro\',Calibri; width:90%; font-size: 18px; border: 2px solid #B4BFC3;\" bgcolor=\"#F9F9F9\">");
 									fout.println("<tbody>");
 									fout.println("<tr bgcolor=\"#F9F9F9\" style=\"font-family: 'Source Sans Pro',Calibri;  font-size: 18px; border: 2px solid #B4BFC3\";>");
 									fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\" colspan=\"3\"><b> Passed cases</b> </td>");
 									fout.println("</tr>");
 								} else if (status.equalsIgnoreCase(FAILED)) {
 									// Failed
-									fout.println("<table id=\"failTable\" style=\"font-family: \'Source Sans Pro\',Calibri;  font-size: 18px; border: 2px solid #B4BFC3;\" bgcolor=\"#F9F9F9\">");
+									fout.println("<table align=center id=\"failTable\" style=\"font-family: \'Source Sans Pro\',Calibri; width:90%; font-size: 18px; border: 2px solid #B4BFC3;\" bgcolor=\"#F9F9F9\">");
 									fout.println("<tbody>");
 									fout.println("<tr bgcolor=\"#F9F9F9\" style=\"font-family: 'Source Sans Pro',Calibri;  font-size: 18px; border: 2px solid #B4BFC3\";>");
 									fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\" colspan=\"3\"> <b>Failed cases</b> </td>");
 									fout.println("</tr>");
 								} else {
 									// Skipped
-									fout.println("<table id=\"skipTable\" style=\"font-family: \'Source Sans Pro\',Calibri;  font-size: 18px; border: 2px solid #B4BFC3;\" bgcolor=\"#F9F9F9\">");
+									fout.println("<table align=center id=\"skipTable\" style=\"font-family: \'Source Sans Pro\',Calibri; width:90%; font-size: 18px; border: 2px solid #B4BFC3;\" bgcolor=\"#F9F9F9\">");
 									fout.println("<tbody>");
 									fout.println("<tr bgcolor=\"#F9F9F9\" style=\"font-family: 'Source Sans Pro',Calibri;  font-size: 18px; border: 2px solid #B4BFC3\";>");
 									fout.println("<td style=\"border: 2px solid #B4BFC3;\" align=\"center\" colspan=\"3\">"+ "<b>Skipped cases</b>" + "</td>");
@@ -1087,7 +1099,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 				}
 			}
 		}
-		fout.println("</table>");
+		fout.println("</table> <br> ");
 	}
 
 	/**
