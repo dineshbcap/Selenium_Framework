@@ -5,7 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 import utils.seleniumutils.SeleniumWebDriver;
 
 
-public class IDMPage extends SeleniumWebDriver{
+public class IdmPage extends SeleniumWebDriver{
 	
 	private By readyLocator = By.id("imgSearch");	
 	
@@ -13,7 +13,7 @@ public class IDMPage extends SeleniumWebDriver{
 	/***
 	 * Call to super constructor
 	 */
-	public IDMPage(){
+	public IdmPage(){
 		PageFactory.initElements(driver, this);
 		logTitleMessage("Instantiating page, waiting for element: "+readyLocator+ " to be present");
 		waitForElement(readyLocator, READYLOCATORWAITTIME);
@@ -26,19 +26,19 @@ public class IDMPage extends SeleniumWebDriver{
 	 * @param HashedMap- Test data to verify the IDM page
 	 * @return boolean- returns true if all required data is present, else false
 	 */
-	public boolean verifyIDMPage(HashedMap IDMData){
+	public boolean verifyIdmPage(HashedMap idmData){
 		boolean returnValue=true;
 		
-		if(!isTextPresent(IDMData.get("EN").toString())){
+		if(!isTextPresent(idmData.get("EN").toString())){
 			returnValue=false;
 		}
-		if(!isTextPresent(IDMData.get("DOJ").toString())){
+		if(!isTextPresent(idmData.get("DOJ").toString())){
 			returnValue=false;
 		}
-		if(!isTextPresent(IDMData.get("EmployeeType").toString())){
+		if(!isTextPresent(idmData.get("EmployeeType").toString())){
 			returnValue=false;
 		}
-		if(!isTextPresent(IDMData.get("PrimaryManager").toString())){
+		if(!isTextPresent(idmData.get("PrimaryManager").toString())){
 			returnValue=false;
 		}
 		return returnValue;

@@ -26,7 +26,9 @@ public class ExcelReader {
 	 * @return Hashtable (returns row count and column count)
 	 * @since April 04, 2010
 	 */
-
+	private ExcelReader(){
+		
+	}
 	public static Hashtable<String, Integer> findRowColumnCount(
 			HSSFSheet sheet, Hashtable<String, Integer> rowColumnCount) {
 

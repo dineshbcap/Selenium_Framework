@@ -15,7 +15,7 @@ import utils.baseclass.TestBaseClass;
 import pageobjects.LoginPage;
 import pageobjects.SearchPage;
 import pageobjects.SharedPage;
-import utils.retryAnalyser.RetryRule;
+import utils.retryanalyser.RetryRule;
 import utils.testdatareader.ExcelReader;
 
 @Listeners(utils.baseclass.CustomizedReporter.class)
@@ -39,17 +39,17 @@ public class SearchByName extends TestBaseClass{
 		// ------------------------------------------------------------------//
 		// Step-1: Load the application //
 		// ------------------------------------------------------------------//
-	
+		String userName="UserName";
 		ArrayList<HashedMap> loginTestData = ExcelReader.getTestDataByTestCaseId(
 				"TC_EBS_001", LoginTest.class.getSimpleName());
-		log.info(loginTestData.get(0).get("UserName").toString() + " - ");
+		log.info(loginTestData.get(0).get(userName).toString() + " - ");
 	
 		// ------------------------------------------------------------------//
 		// Step-2: Login to the application
 		// ------------------------------------------------------------------//
 		logTitleMessage("Login to application");
 		loginPage = new LoginPage();
-		loginPage.login(loginTestData.get(0).get("UserName").toString(), loginTestData.get(0).get("Password").toString());
+		loginPage.login(loginTestData.get(0).get(userName).toString(), loginTestData.get(0).get("Password").toString());
 		logTitleMessage("Login Successful");
 		
 		// ------------------------------------------------------------------//
@@ -69,10 +69,10 @@ public class SearchByName extends TestBaseClass{
 		// Step-5:Search by name //
 		// ------------------------------------------------------------------//
 		for(int i=0;i<testData.size();i++){
-			log.info("Searching for: - "+testData.get(i).get("UserName"));
-			searchPage=sharedPage.searchbyanyname(testData.get(i).get("UserName").toString());
-			Assert.assertTrue("Could not find the Name: "+testData.get(i).get("UserName"),searchPage.verifySearchPage());
-			log.info("Successfully got: - "+testData.get(i).get("UserName"));
+			log.info("Searching for: - "+testData.get(i).get(userName));
+			searchPage=sharedPage.searchbyanyname(testData.get(i).get(userName).toString());
+			Assert.assertTrue("Could not find the Name: "+testData.get(i).get(userName),searchPage.verifySearchPage());
+			log.info("Successfully got: - "+testData.get(i).get(userName));
 		}
 				
 	}

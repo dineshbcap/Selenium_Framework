@@ -20,21 +20,35 @@ public class FileUtility {
 	 *            - Destination File
 	 * @throws IOException
 	 */
-	public static void copyFile(File f1, File f2) throws IOException {
-		InputStream in = new FileInputStream(f1);
+	private FileUtility(){
+		
+	}
+	public static void copyFile(File f1, File f2) {
+		try {
 
-		// For Overwrite the file.
-		OutputStream out = new FileOutputStream(f2);
+			InputStream in = new FileInputStream(f1);
+			OutputStream out = new FileOutputStream(f2);
+			try {
 
-		byte[] buf = new byte[1024];
-		int len;
-		while ((len = in.read(buf)) > 0) {
-			out.write(buf, 0, len);
+				byte[] buf = new byte[1024];
+				int len;
+				while ((len = in.read(buf)) > 0) {
+					out.write(buf, 0, len);
+				}
+
+				IOUtils.closeQuietly(in);
+				IOUtils.closeQuietly(out);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				in.close();
+				out.close();
+			}
+		} catch (IOException e) {
+			// TODO: error handling
 		}
-		in.close();
-		out.close();
-		IOUtils.closeQuietly(in);
-		IOUtils.closeQuietly(out);
+
 	}
 
 	/***

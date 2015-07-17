@@ -28,6 +28,10 @@ public class TestLinkProcessor {
 	 * @param serverURL
 	 * @param developerKey
 	 */
+	
+	private TestLinkProcessor(){
+		
+	}
 	public static void connectTo(String serverURL, String developerKey) {
 		LOGGER.info("----------------------------------------------------------------------------------------");
 		if(testLinkApiClient == null) {

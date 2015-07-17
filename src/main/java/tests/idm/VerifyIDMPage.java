@@ -11,17 +11,17 @@ import utils.annotations.MapToTestLink;
 
 import tests.login.LoginTest;
 import utils.baseclass.TestBaseClass;
-import pageobjects.IDMPage;
+import pageobjects.IdmPage;
 import pageobjects.IntranetHomePage;
 import pageobjects.LoginPage;
-import utils.retryAnalyser.RetryRule;
+import utils.retryanalyser.RetryRule;
 import utils.testdatareader.ExcelReader;
 
 @Listeners(utils.baseclass.CustomizedReporter.class)
 
 public class VerifyIDMPage extends TestBaseClass{
 	private IntranetHomePage homePage;
-	private IDMPage iDMPage;
+	private IdmPage iDMPage;
 
 	
 
@@ -59,9 +59,9 @@ public class VerifyIDMPage extends TestBaseClass{
 		// ------------------------------------------------------------------//
 		// Step-3: Fetch Test Data for IDM Page //
 		// ------------------------------------------------------------------//
-		ArrayList<HashedMap> IDMData = ExcelReader.getTestDataByTestCaseId(
+		ArrayList<HashedMap> idmData = ExcelReader.getTestDataByTestCaseId(
 				"TC_IDM_001", VerifyIDMPage.class.getSimpleName());
-		assertTrue(iDMPage.verifyIDMPage(IDMData.get(0)),"Error in verifying training system page",driver);
+		assertTrue(iDMPage.verifyIdmPage(idmData.get(0)),"Error in verifying training system page",driver);
 		
 	}
 }

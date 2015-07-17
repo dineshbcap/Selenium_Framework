@@ -10,7 +10,7 @@ import utils.annotations.MapToTestLink;
 
 import utils.baseclass.TestBaseClass;
 import pageobjects.LoginPage;
-import utils.retryAnalyser.RetryRule;
+import utils.retryanalyser.RetryRule;
 import utils.testdatareader.ExcelReader;
 
 @Listeners(utils.baseclass.CustomizedReporter.class)

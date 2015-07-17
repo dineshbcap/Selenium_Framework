@@ -1,4 +1,4 @@
-package utils.retryAnalyser;
+package utils.retryanalyser;
 
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
@@ -12,7 +12,7 @@ import utils.genericutility.Config;
  * 
  */
 public class RetryRule implements IRetryAnalyzer {
-	public int retryCount;
+	private int retryCount;
 	private int maxRetry;
 
 	public RetryRule() {
@@ -24,10 +24,10 @@ public class RetryRule implements IRetryAnalyzer {
 		String e= result.getThrowable().toString();
 		if(e.contains("AssertionError")&&maxRetry>retryCount) {
 				retryCount++;
-				Config.retryCount=retryCount;
+				Config.RETRYCOUNT=retryCount;
 				return true;
 		}
-		Config.retryCount=0;
+		Config.RETRYCOUNT=0;
 		return false;
 	}
 

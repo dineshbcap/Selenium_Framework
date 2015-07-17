@@ -63,13 +63,13 @@ public class IntranetHomePage extends SeleniumWebDriver {
 	 * @param 
 	 * @return IDMPage- returns new IDM Page
 	 */
-	public IDMPage clickIDMLink() {
+	public IdmPage clickIDMLink() {
 		click(readyLocator);
 		waitForPageToLoad();
 		for(String winHandle : driver.getWindowHandles()){
 		    driver.switchTo().window(winHandle);
 		}
-		return new IDMPage();
+		return new IdmPage();
 	}
 
 	
@@ -78,33 +78,20 @@ public class IntranetHomePage extends SeleniumWebDriver {
 	 * @return boolean- returns true if IDM link is present, else false
 	 */
 	public boolean verifyElementIDM() {
-		if (isElementPresent(lnkIDM)) {
-			return true;
-		} else{
-			return false;
-		}
+		return isElementPresent(lnkIDM);
 	}
 	/***
 	 * Verify if LMS Link is present
 	 * @return boolean- returns true if LMS link is present, else false
 	 */
 	public boolean verifyElementMS() {
-		if (isElementPresent(lnkLMS)) {
-			return true;
-		} else{
-			return false;
-		}
-
+		return isElementPresent(lnkLMS);
 	}
 	/***
 	 * Verify if Seventh Sense Link is present
 	 * @return boolean- returns true if Seventh Sense link is present, else false
 	 */
 	public boolean verifyElementSeventhSense() {
-		if (isElementPresent(lnkSeventhSense)) {
-			return true;
-		} else{
-			return false;
-		}
+		return isElementPresent(lnkSeventhSense);
 	}
 }

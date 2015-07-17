@@ -62,7 +62,7 @@ public class SeleniumWebDriver {
 			status = "Fail";
 			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), text, EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
-		if(Config.requireToWrite){
+		if(Config.REQUIRETOWRITE){
 			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), text, EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return result;
@@ -87,7 +87,7 @@ public class SeleniumWebDriver {
 			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), element.toString().substring(element.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
-		if(Config.requireToWrite){
+		if(Config.REQUIRETOWRITE){
 			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), element.toString().substring(element.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return exists;
@@ -153,7 +153,7 @@ public class SeleniumWebDriver {
 			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString().substring(ajaxElementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
-		if(Config.requireToWrite){
+		if(Config.REQUIRETOWRITE){
 			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString().substring(ajaxElementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return result;
@@ -197,7 +197,7 @@ public class SeleniumWebDriver {
 			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), elementLocator.toString().substring(elementLocator.toString().indexOf(":")+2), value, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
-		if(Config.requireToWrite){
+		if(Config.REQUIRETOWRITE){
 			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), elementLocator.toString().substring(elementLocator.toString().indexOf(":")+2), value, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return result;
@@ -230,7 +230,7 @@ public class SeleniumWebDriver {
 			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString().substring(ajaxElementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
-		if(Config.requireToWrite){
+		if(Config.REQUIRETOWRITE){
 			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), ajaxElementName.toString().substring(ajaxElementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return result;
@@ -270,7 +270,7 @@ public class SeleniumWebDriver {
 			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), ajaxCheckboxName.toString().substring(ajaxCheckboxName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
-		if(Config.requireToWrite){
+		if(Config.REQUIRETOWRITE){
 			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), ajaxCheckboxName.toString().substring(ajaxCheckboxName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return result;
@@ -311,7 +311,7 @@ public class SeleniumWebDriver {
 			status = "Fail";
 			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), EMPTY, EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
-		if(Config.requireToWrite){
+		if(Config.REQUIRETOWRITE){
 			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), EMPTY, EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 	}
@@ -337,7 +337,7 @@ public class SeleniumWebDriver {
 			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), element.toString().substring(element.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
-		if(Config.requireToWrite){
+		if(Config.REQUIRETOWRITE){
 			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), element.toString().substring(element.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 	}
@@ -366,7 +366,7 @@ public class SeleniumWebDriver {
 			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), listName.toString().substring(listName.toString().indexOf(":")+2), valueForSelection, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
-		if(Config.requireToWrite){
+		if(Config.REQUIRETOWRITE){
 			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), listName.toString().substring(listName.toString().indexOf(":")+2), valueForSelection, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return result;
@@ -390,7 +390,7 @@ public class SeleniumWebDriver {
 			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), elementName.toString().substring(elementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
 		
-		if(Config.requireToWrite){
+		if(Config.REQUIRETOWRITE){
 			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), elementName.toString().substring(elementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return returnString;
@@ -412,7 +412,7 @@ public class SeleniumWebDriver {
 			status = "Fail";
 			new ExceptionHandler(e, driver, getCustomAttributeValue(getCurrentMethodName(), elementName.toString().substring(elementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()) );
 		}
-		if(Config.requireToWrite){
+		if(Config.REQUIRETOWRITE){
 			logCustomMessage().setAttribute(getCurrentDateAndTime(), getCustomAttributeValue(getCurrentMethodName(), elementName.toString().substring(elementName.toString().indexOf(":")+2), EMPTY, status, EMPTY, getCallingMethodAndLineNumber()));
 		}
 		return returnString;
@@ -442,7 +442,7 @@ public class SeleniumWebDriver {
 				try {
 					FileUtils.copyFile(scrFile, scrFile1);
 				} catch (IOException e1) {
-					e1.printStackTrace();
+					log.info(e1.toString());
 				}
 					
 					
@@ -474,7 +474,7 @@ public class SeleniumWebDriver {
 	   * @param condition the condition to evaluate
 	   * @param message the assertion error message
 	   */
-		 public static void verifyTrue(boolean condition, String message, WebDriver driver) {
+		 public void verifyTrue(boolean condition, String message, WebDriver driver) {
 		    if(!condition) {
 			    	
 		    	File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -483,7 +483,7 @@ public class SeleniumWebDriver {
 			try {
 				FileUtils.copyFile(scrFile, scrFile1);
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				log.info(e1.toString());
 			}
 					
 			 }

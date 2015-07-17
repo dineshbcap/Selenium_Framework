@@ -62,11 +62,7 @@ public class TrainingSystemPage extends SeleniumWebDriver{
 	 * @return boolean- returns true if Impact Program link is present, else false
 	 */
 	public boolean verifyImpactProg() {
-		if (isElementPresent(lnkImpactProg)) {
-			return true;
-		} else
-			return false;
-
+		return isElementPresent(lnkImpactProg);
 	}
 	
 	/***
@@ -74,11 +70,7 @@ public class TrainingSystemPage extends SeleniumWebDriver{
 	 * @return boolean- returns true if Wisdom Curve link is present, else false
 	 */
 	public boolean verifyWisdomCurve() {
-		if (isElementPresent(lnkWisdomCurve)) {
-			return true;
-		} else
-			return false;
-
+		return isElementPresent(lnkWisdomCurve);
 	}
 	
 	/***
@@ -86,11 +78,7 @@ public class TrainingSystemPage extends SeleniumWebDriver{
 	 * @return boolean- returns true if Dev Teams link is present, else false
 	 */
 	public boolean verifyDevTeams() {
-		if (isElementPresent(lnkDevTeams)) {
-			return true;
-		} else{
-			return false;
-		}
+		return isElementPresent(lnkDevTeams);
 	}
 	
 	/***
@@ -98,11 +86,7 @@ public class TrainingSystemPage extends SeleniumWebDriver{
 	 * @return boolean- returns true if Testing Teams link is present, else false
 	 */
 	public boolean verifyTestingTeams() {
-		if (isElementPresent(lnkTestingTeams)) {
-			return true;
-		} else{
-			return false;
-		}
+		return isElementPresent(lnkTestingTeams);
 	}
 	
 	/***
@@ -110,10 +94,7 @@ public class TrainingSystemPage extends SeleniumWebDriver{
 	 * @return boolean- returns true if ISMS link is present, else false
 	 */
 	public boolean verifyElementISMS() {
-		if (isElementPresent(lnkISMS)) {
-			return true;
-		} else
-			return false;
+		return isElementPresent(lnkISMS);
 
 	}
 	
@@ -122,11 +103,7 @@ public class TrainingSystemPage extends SeleniumWebDriver{
 	 * @return boolean- returns true if Orientation Program link is present, else false
 	 */
 	public boolean verifyElementOrientationProg() {
-		if (isElementPresent(lnkOrientationProg)) {
-			return true;
-		} else{
-			return false;
-		}
+		return isElementPresent(lnkOrientationProg);
 	}
 
 }

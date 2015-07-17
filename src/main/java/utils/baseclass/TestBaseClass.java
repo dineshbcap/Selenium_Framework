@@ -66,7 +66,7 @@ public class TestBaseClass {
 	/**
 	 * Standard log4j logger.
 	 */
-	protected final Logger log = Logger.getLogger(getClass().getSimpleName());
+	protected Logger log = Logger.getLogger(getClass().getSimpleName());
 
 	/**
 	 * To Read the environment details
@@ -87,8 +87,8 @@ public class TestBaseClass {
 	/**
 	 * Instantiating the driver path
 	 */
-	private final String IE_FILE_PATH = "/src/main/resources/extensions/IEDriverServer.exe";
-	private final String CHROME_FILE_PATH = "/src/main/resources/extensions/chromedriver.exe";
+	private static final String IE_FILE_PATH = "/src/main/resources/extensions/IEDriverServer.exe";
+	private static final String CHROME_FILE_PATH = "/src/main/resources/extensions/chromedriver.exe";
 
 	/**
 	 * For DB connection
@@ -221,7 +221,7 @@ public class TestBaseClass {
 	 * @return
 	 * @throws IOException
 	 */
-	public WebDriver getWebDriver(String browser,String seleniumHost, String seleniumPort) throws IOException {
+	public static WebDriver getWebDriver(String browser,String seleniumHost, String seleniumPort) throws IOException {
 		switch (BrowserType.valueOf(browser)) {
 		case FIREFOX:
 			DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -285,12 +285,12 @@ public class TestBaseClass {
 
 		String dateTimeStamp = DateTimeUtility
 				.getCurrentDateAndTimeInLoggerFormat();
-		String status = "PASS";
+		status = "PASS";
 		MapToTestLink mapToTestLink = result.getMethod()
 				.getConstructorOrMethod().getMethod()
 				.getAnnotation(MapToTestLink.class);
 		
-		if(Config.testLinkUpdate) {
+		if(Config.TESTLINKUPDATE) {
 			if (mapToTestLink != null) {
 				String testCase = mapToTestLink.testCaseID();
 				if (result.isSuccess()) {
@@ -450,7 +450,7 @@ public class TestBaseClass {
 			try {
 				FileUtils.copyFile(scrFile, scrFile1);
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				log.info(e1.toString());
 			}
 
 			log.info("Customized Assert true block executed...Temprory function, Need to enhance if You wish scrrenshot in report. Failure screenshot in 'custom-test-report/Failure_Screenshot/AssertFailure.jpg");
@@ -502,7 +502,7 @@ public class TestBaseClass {
 			try {
 				FileUtils.copyFile(scrFile, scrFile1);
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				log.info(e1.toString());
 			}
 
 			log.info("Customized Verify True block executed...Temprory function, Need to enhance if You wish scrrenshot in report. Failure screenshot in 'custom-test-report/Failure_Screenshot/AssertFailure.jpg");

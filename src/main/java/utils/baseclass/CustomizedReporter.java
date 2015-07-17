@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -27,6 +28,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
+import mx4j.log.Log;
 
 import org.testng.IReporter;
 import org.testng.ISuite;
@@ -50,24 +53,31 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	private static final String FAILED = "_Failed";
 	private static final String SKIPPED = "_Skipped";
 	private Boolean flag = true;
-	private String OS = null;
+	private String os = null;
 	private String arch = null;
 	private String JavaVersion=null;
 	private String testStartedOn=null;
 	private String testEndedOn=null;
+	
+	/**
+	 * Standard log4j logger.
+	 */
+	protected final Logger log = Logger.getLogger(getClass().getSimpleName());
+	
+	
 	/**
 	 * This function will execute before suite start
 	 */
 	public void onStart(ISuite suite) {
 		// for get the current system time
 		Calendar cal = Calendar.getInstance();				
-		SimpleDateFormat DateFormat1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		testStartedOn = DateFormat1.format(cal.getTime());
+		SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		testStartedOn = dateFormat1.format(cal.getTime());
 		
 		// for get the current directory
 		String workingdirectory = System.getProperty("user.dir");
 		// used to delete directory
-		File directory = new File(workingdirectory + "/custom-test-report");
+		File directory = new File(workingdirectory + "/"+outFolder);
 
 		// make sure directory exists
 		if (directory.exists()) {
@@ -75,15 +85,15 @@ public class CustomizedReporter implements ITestListener, IReporter,
 				delete(directory);
 
 			} catch (IOException e) {
-				e.printStackTrace();
+				log.info(e.toString());
 			}
 		}
 		// used to create directory
-		screenshotDir = new File(workingdirectory + "/custom-test-report");
+		screenshotDir = new File(workingdirectory + "/"+outFolder);
 		screenshotDir.mkdir();
 
 		screenshotDir = new File(workingdirectory
-				+ "/custom-test-report/Failure_Screenshot");
+				+ "/"+outFolder+"/Failure_Screenshot");
 		screenshotDir.mkdir();
 	}
 
@@ -93,8 +103,8 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	public void onFinish(ISuite suite) {
 		// for get the current system time
 				Calendar cal = Calendar.getInstance();				
-				SimpleDateFormat DateFormat1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				testEndedOn = DateFormat1.format(cal.getTime());
+				SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				testEndedOn = dateFormat1.format(cal.getTime());
 	}
 
 	/**
@@ -106,7 +116,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 			className = context.getCurrentXmlTest().getClasses().get(0)
 					.getName();
 			// used for creating required directories
-			createRequiredDirectory(outFolder, className);
+			createRequiredDirectory(className);
 		} catch (IOException e) {
 			e.getMessage();
 		}
@@ -166,11 +176,11 @@ public class CustomizedReporter implements ITestListener, IReporter,
 
 	}
 
-	private void createRequiredDirectory(String outdir, String className)
+	private void createRequiredDirectory(String className)
 			throws IOException {
 		// for get the current directory
 		String workingdirectory = System.getProperty("user.dir");
-		screenshotDir = new File(workingdirectory + "/custom-test-report" + "/"
+		screenshotDir = new File(workingdirectory + "/"+outFolder+ "/"
 				+ className);
 		screenshotDir.mkdir();
 	}
@@ -188,7 +198,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	 * @param out
 	 */
 	private void startHtmlPage(PrintWriter out, ITestResult result) {
-		if (Config.retryCount == 0) {
+		if (Config.RETRYCOUNT == 0) {
 		out.println("<html>");
 		out.println("<head>");
 		out.println("<meta content=\"text/html; charset=UTF-8\" http-equiv=\"content-type\"/><meta content=\"cache-control\" http-equiv=\"no-cache\"/><meta content=\"pragma\" http-equiv=\"no-cache\"/>");
@@ -260,12 +270,12 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		out.println("<td><b><i>Calling-Class with Linenumber</i></b></td>");
 		out.println("</tr>");
 		}
-		if (Config.retryCount > 0) {
+		if (Config.RETRYCOUNT > 0) {
 			out.println("<table border=\"1\">");
 			out.println("<tr class=\"title\" title=\"\" alt=\"\">");
 			fout.println("<td align=\"middle\"><img src='../images/info.png' title=\"Info\" height=\"20\" width=\"20\" ></td>");
 			out.println("<td style=\"color:red;\" colspan=\"5\"><b> Retry Attempt: "
-					+ ((Config.retryCount)) + "</b></td>");
+					+ ((Config.RETRYCOUNT)) + "</b></td>");
 			out.println("</tr>");
 		}
 	}
@@ -371,8 +381,11 @@ public class CustomizedReporter implements ITestListener, IReporter,
 					{
 						continue;
 					}
-					if(temp1==temp[5])
+					if(temp1.equals(temp[5]))
+					{
 						continue;
+					}
+					
 					fout.println("<td>" + temp1 + "</td>");
 			}
 			// end up '<tr>' tag
@@ -421,7 +434,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 			String outputDirectory) {
 		
 		// get OS information, browser information, Execution Info 
-        OS = System.getProperty("os.name");
+        os = System.getProperty("os.name");
         arch=System.getProperty("os.arch");
         JavaVersion=System.getProperty("java.version") ;
         
@@ -453,10 +466,10 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		// create the html file with current running class and test name
 		try {
 			fout = new PrintWriter(new BufferedWriter(new FileWriter(new File(
-					new File(workingdirectory + "/custom-test-report"),
+					new File(workingdirectory + "/"+outFolder),
 					"index.html"))));
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.info(e.toString());
 		}
 		
 		fout.println("<!DOCTYPE html>");
@@ -747,7 +760,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	    fout.println(" }");
 	    fout.println("</style>");
 	    fout.println("<div id=\"OS\" class=\"boxWidth\">");
-	    fout.println("<span class=\"boxFamily\">"+ OS  +"</span>");
+	    fout.println("<span class=\"boxFamily\">"+ os  +"</span>");
 	    fout.println("<br>");
 	    fout.println("<span style=\"text-align: center;font-size: 13px;\">OS</span>");
 	    fout.println("</div>");
@@ -792,7 +805,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 		fout.println(" }	");
 		fout.println("</style>");
 		fout.println("<div id=\"Address\" class=\"boxWidth\">");
-		fout.println("<span id=\"AddressSpan1\" class=\"boxFamily\">"+ Config.url +"</span>");
+		fout.println("<span id=\"AddressSpan1\" class=\"boxFamily\">"+ Config.URL +"</span>");
 		fout.println("<br>");
 		fout.println("<span class=\"boxFamilySmall\">URL</span>");
 		fout.println("</div>");
@@ -979,7 +992,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 	         msg.setSubject("This is the Subject Line!");
 	        screenshotBasePath = new File(".").getCanonicalPath();
 			File file= new File(screenshotBasePath + File.separator
-						+ "custom-test-report"+File.separator+"index.html");
+						+ outFolder+File.separator+"index.html");
 	         // Now set the actual message
 	         DataSource source = new FileDataSource(file);
 	         messageBodyPart.setDataHandler(new DataHandler(source));
@@ -990,26 +1003,25 @@ public class CustomizedReporter implements ITestListener, IReporter,
 
 	         // Send message
 	         Transport.send(msg);
-	         System.out.println("Sent message successfully....");
 	      }catch (MessagingException mex) {
-	         mex.printStackTrace();
+	    	  log.info(mex.toString());
 	      }catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+	    	  log.info(e.toString());
 			}
 		}
 
 	public void generateIndexHtmlAreas(String status) {
 		// for get the current directory
 		String workingdirectory = System.getProperty("user.dir");
-		File file = new File(workingdirectory + "/custom-test-report");
+		File file = new File(workingdirectory + "/"+outFolder);
 		String[] names = file.list();
 		flag = true;
 		for (String fullClassName : names) {
 			String splitClassName[] = fullClassName.split("\\.");
 			int length = splitClassName.length;
 			if (!(fullClassName.equalsIgnoreCase("Failure_Screenshot"))) {
-				if (new File(workingdirectory + "/custom-test-report/"
+				if (new File(workingdirectory + "/"+outFolder+"/"
 						+ fullClassName).isDirectory()) {
 					String fullPackage = "";
 
@@ -1022,7 +1034,7 @@ public class CustomizedReporter implements ITestListener, IReporter,
 						}
 					}
 					File file1 = new File(workingdirectory
-							+ "/custom-test-report/" + fullClassName);
+							+ "/"+outFolder+"/" + fullClassName);
 					String[] names1 = file1.list();
 
 					int totalRowCountToMerge = 0;

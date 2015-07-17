@@ -28,6 +28,10 @@ public class TestLinkHelper {
 	 * @return
 	 * @throws TestLinkAPIException
 	 */
+	
+	private TestLinkHelper(){
+		
+	}
 	public static Hashtable<String, ArrayList<String>> getAutomationTestCases(TestLinkAPIClient api, String tProjectName, int tplanID, String keyToMatch, String valueToMatch, String KeyToFetch) throws TestLinkAPIException {
 		TestLinkAPIResults getProjectResults = api.getAutomatedTestCasesForTestPlan(tplanID);
 		Hashtable<String, ArrayList<String>> tcArray = mapFetcher(api, getProjectResults, tProjectName, keyToMatch, valueToMatch,

@@ -14,7 +14,7 @@ import utils.baseclass.TestBaseClass;
 import pageobjects.IntranetHomePage;
 import pageobjects.LoginPage;
 import pageobjects.TrainingSystemPage;
-import utils.retryAnalyser.RetryRule;
+import utils.retryanalyser.RetryRule;
 import utils.testdatareader.ExcelReader;
 
 @Listeners(utils.baseclass.CustomizedReporter.class)

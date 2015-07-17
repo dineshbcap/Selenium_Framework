@@ -19,6 +19,9 @@ public class TestLinkAPIHelper implements TestLinkAPIConst {
 	 * @return
 	 * @throws TestLinkAPIException
 	 */
+	private TestLinkAPIHelper(){
+		
+	}
 	public static Integer getProjectID(TestLinkAPIClient apiClient, String projectName) throws TestLinkAPIException {
 		Map<String, Object> data = getProjectInfo(apiClient, projectName);
 		return getIdentifier(data);

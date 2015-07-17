@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DateTimeUtility {
+public final class DateTimeUtility {
 
 	static String dateFormatMMddyyyy="MM/dd/yyyy";
 	static String dateFormatyyyyMMdd="yyyy-MM-dd";
@@ -16,6 +16,9 @@ public class DateTimeUtility {
 	 * 
 	 * @return date - in the above mentioned format
 	 */
+	private DateTimeUtility(){
+		
+	}
 	public static String getCurrentDateAndTime() {
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyHHmmss");
 		Date date = new Date();

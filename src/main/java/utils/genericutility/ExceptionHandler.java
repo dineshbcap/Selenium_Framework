@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
@@ -22,6 +23,7 @@ public class ExceptionHandler extends Exception{
 	private String customMessage = "";
 	private WebDriver driver = null;
 	private String message[];
+	protected final Logger log = Logger.getLogger(getClass().getSimpleName());
 	
     public ExceptionHandler(Exception e, WebDriver driver, String customMessage){
     	this.customMessage = customMessage;
@@ -85,7 +87,7 @@ augmentedDriver).getScreenshotAs(OutputType.FILE);
 		try {
 			FileUtils.copyFile(scrFile, scrFile1);
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			log.info(e.toString());
 		}
 		
 		logCustomMessage().setAttribute(getCurrentDateAndTime(), customMessage);
