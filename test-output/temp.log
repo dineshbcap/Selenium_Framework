@@ -1,8 +1,5 @@
-09-Jun-2015 14:15:13:942 INFO  LoginTest:175 - =====================================================================================================
-09-Jun-2015 14:15:13:960 INFO  LoginTest:184 - App URL    : http://systems.aspiresys.com/
-09-Jun-2015 14:15:13:960 INFO  LoginTest:185 - Browser    : CHROME
-09-Jun-2015 14:15:13:961 INFO  LoginTest:186 - =====================================================================================================
-09-Jun-2015 14:15:14:621 INFO  LoginTest:32 - vasanth.manickam - 
-09-Jun-2015 14:15:14:622 INFO  LoginTest:395 - Login to application
-09-Jun-2015 14:15:44:043 INFO  LoginTest:395 - Login Successful
-09-Jun-2015 14:15:50:034 INFO  LoginTest:319 - The test result for loginTest is PASS
+23-Nov-2015 15:56:03:930 INFO  LoginTest:182 - =====================================================================================================
+23-Nov-2015 15:56:03:936 INFO  LoginTest:191 - App URL    : http://systems.aspiresys.com/
+23-Nov-2015 15:56:03:937 INFO  LoginTest:192 - Browser    : CHROME
+23-Nov-2015 15:56:03:937 INFO  LoginTest:193 - =====================================================================================================
+23-Nov-2015 15:56:04:467 INFO  LoginTest:33 - vasanth.manickam - 

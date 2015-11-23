@@ -254,8 +254,8 @@ public class TestBaseClass {
 		case SAFARI:
 			DesiredCapabilities safariCapabilities = DesiredCapabilities
 					.safari();
-			safariCapabilities.setCapability(
-					SafariDriver.CLEAN_SESSION_CAPABILITY, true);
+//			safariCapabilities.setCapability(
+//					SafariDriver.CLEAN_SESSION_CAPABILITY, true);
 			return new SafariDriver(safariCapabilities);
 		case CHROME:
 			DesiredCapabilities chromeCapabilities = DesiredCapabilities

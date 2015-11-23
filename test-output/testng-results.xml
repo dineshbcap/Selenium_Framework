@@ -1,38 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="1" passed="1">
+<testng-results skipped="1" failed="0" total="1" passed="0">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="61743" started-at="2015-06-09T08:44:49Z" finished-at="2015-06-09T08:45:51Z">
+  <suite name="Default suite" duration-ms="32" started-at="2015-11-23T07:31:30Z" finished-at="2015-11-23T07:31:30Z">
     <groups>
       <group name="Login">
-        <method signature="LoginTest.loginTest()[pri:0, instance:com.projectname.test.functional.login.LoginTest@1a2d1c9]" name="loginTest" class="com.projectname.test.functional.login.LoginTest"/>
+        <method signature="LoginTest.loginTest()[pri:0, instance:tests.login.LoginTest@cfaced]" name="loginTest" class="tests.login.LoginTest"/>
       </group> <!-- Login -->
       <group name="Regression">
-        <method signature="LoginTest.loginTest()[pri:0, instance:com.projectname.test.functional.login.LoginTest@1a2d1c9]" name="loginTest" class="com.projectname.test.functional.login.LoginTest"/>
+        <method signature="LoginTest.loginTest()[pri:0, instance:tests.login.LoginTest@cfaced]" name="loginTest" class="tests.login.LoginTest"/>
       </group> <!-- Regression -->
     </groups>
-    <test name="Default test" duration-ms="61743" started-at="2015-06-09T08:44:49Z" finished-at="2015-06-09T08:45:51Z">
-      <class name="com.projectname.test.functional.login.LoginTest">
-        <test-method status="PASS" signature="genericSetUp()[pri:0, instance:com.projectname.test.functional.login.LoginTest@1a2d1c9]" name="genericSetUp" is-config="true" duration-ms="23969" started-at="2015-06-09T14:14:49Z" finished-at="2015-06-09T14:15:13Z">
+    <test name="Default test" duration-ms="32" started-at="2015-11-23T07:31:30Z" finished-at="2015-11-23T07:31:30Z">
+      <class name="tests.login.LoginTest">
+        <test-method status="FAIL" signature="genericSetUp(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:tests.login.LoginTest@cfaced]" name="genericSetUp" is-config="true" duration-ms="0" started-at="2015-11-23T13:01:30Z" finished-at="2015-11-23T13:01:30Z">
+          <exception class="org.testng.TestNGException">
+            <message>
+              <![CDATA[
+Parameter 'webSite' is required by @Configuration on method genericSetUp but has not been marked @Optional or defined
+in C:\Users\vasanth.manickam\AppData\Local\Temp\testng-eclipse--278272282\testng-customsuite.xml]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.testng.TestNGException: 
+Parameter 'webSite' is required by @Configuration on method genericSetUp but has not been marked @Optional or defined
+in C:\Users\vasanth.manickam\AppData\Local\Temp\testng-eclipse--278272282\testng-customsuite.xml
+	at org.testng.internal.Parameters.createParameters(Parameters.java:155)
+	at org.testng.internal.Parameters.createParameters(Parameters.java:358)
+	at org.testng.internal.Parameters.createConfigurationParameters(Parameters.java:86)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:199)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:653)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.testng.TestNGException -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- genericSetUp -->
-        <test-method status="PASS" signature="loginTest()[pri:0, instance:com.projectname.test.functional.login.LoginTest@1a2d1c9]" name="loginTest" duration-ms="30083" started-at="2015-06-09T14:15:13Z" finished-at="2015-06-09T14:15:44Z">
+        <test-method status="SKIP" signature="loginTest()[pri:0, instance:tests.login.LoginTest@cfaced]" name="loginTest" duration-ms="7" started-at="2015-11-23T13:01:30Z" finished-at="2015-11-23T13:01:30Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- loginTest -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:com.projectname.test.functional.login.LoginTest@1a2d1c9]" name="tearDown" is-config="true" duration-ms="7671" started-at="2015-06-09T14:15:44Z" finished-at="2015-06-09T14:15:51Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=loginTest status=SUCCESS method=LoginTest.loginTest()[pri:0, instance:com.projectname.test.functional.login.LoginTest@1a2d1c9] output={null}]]]>
-              </value>
-            </param>
-          </params>
+        <test-method status="FAIL" signature="tearDown(org.testng.ITestResult, java.lang.String)[pri:0, instance:tests.login.LoginTest@cfaced]" name="tearDown" is-config="true" duration-ms="0" started-at="2015-11-23T13:01:30Z" finished-at="2015-11-23T13:01:30Z">
+          <exception class="org.testng.TestNGException">
+            <message>
+              <![CDATA[
+Parameter 'seleniumHost' is required by @Configuration on method tearDown but has not been marked @Optional or defined
+in C:\Users\vasanth.manickam\AppData\Local\Temp\testng-eclipse--278272282\testng-customsuite.xml]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.testng.TestNGException: 
+Parameter 'seleniumHost' is required by @Configuration on method tearDown but has not been marked @Optional or defined
+in C:\Users\vasanth.manickam\AppData\Local\Temp\testng-eclipse--278272282\testng-customsuite.xml
+	at org.testng.internal.Parameters.createParameters(Parameters.java:155)
+	at org.testng.internal.Parameters.createParameters(Parameters.java:358)
+	at org.testng.internal.Parameters.createConfigurationParameters(Parameters.java:86)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:199)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:786)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.testng.TestNGException -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- com.projectname.test.functional.login.LoginTest -->
+      </class> <!-- tests.login.LoginTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

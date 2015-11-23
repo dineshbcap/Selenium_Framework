@@ -55,27 +55,27 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-firefox-driver</artifactId>
-			<version>2.33.0</version>
+			<version>2.48.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-ie-driver</artifactId>
-			<version>2.33.0</version>
+			<version>2.48.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-support</artifactId>
-			<version>2.33.0</version>
+			<version>2.48.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-api</artifactId>
-			<version>2.33.0</version>
+			<version>2.48.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-safari-driver</artifactId>
-			<version>2.33.0</version>
+			<version>2.48.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.collections</groupId>
@@ -85,7 +85,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-server</artifactId>
-			<version>2.30.0</version>
+			<version>2.48.2</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency><!-- TestLink communication library -->
